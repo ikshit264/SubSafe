@@ -1,0 +1,58 @@
+datasource db {
+    provider = "mongodb"
+    url      = env("DATABASE_URL")
+}
+
+generator client {
+    provider = "prisma-client-js"
+}
+
+model User {
+    id              String            @id @default(auto()) @map("_id") @db.ObjectId
+    email           String            @unique
+    password        String            @default("hashed_password")
+    name            String?
+    plan            String            @default("free") // free, pro, agency
+    credits         Int               @default(3)
+    lastCreditReset DateTime          @default(now())
+    createdAt       DateTime          @default(now())
+    updatedAt       DateTime          @updatedAt
+    analyses        AnalysisRequest[]
+    payments        Payment[]
+}
+
+model AnalysisRequest {
+    id        String   @id @default(auto()) @map("_id") @db.ObjectId
+    userId    String   @db.ObjectId
+    user      User     @relation(fields: [userId], references: [id])
+    subreddit String
+    title     String
+    body      String
+    result    String
+    createdAt DateTime @default(now())
+}
+
+model Product {
+    id        String   @id @default(auto()) @map("_id") @db.ObjectId
+    name      String
+    price     String
+    features  String[]
+    color     String
+    cta       String
+    productId String   @unique // Dodo Payment Product ID: e.g., pdt_...
+    active    Boolean  @default(true)
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+}
+
+model Payment {
+    id        String   @id @default(auto()) @map("_id") @db.ObjectId
+    userId    String   @db.ObjectId
+    user      User     @relation(fields: [userId], references: [id])
+    amount    Float
+    currency  String
+    status    String // succeeded, pending, failed
+    dodoId    String   @unique // Dodo Payment ID
+    productId String
+    createdAt DateTime @default(now())
+}
