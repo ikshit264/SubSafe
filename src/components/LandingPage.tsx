@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import { NeoButton } from './ui/NeoButton';
-import { APP_NAME, POPULAR_SUBREDDITS } from '@/constants';
+import { APP_NAME, POPULAR_SUBREDDITS, FEATURES } from '@/constants';
 import { CheckCircle, Zap, Shield, PenTool, ArrowRight, Star, X, AlertCircle, Check } from 'lucide-react';
 import { analyzePost } from '@/services/geminiService';
 import { AnalysisResult } from '@/types';
@@ -231,6 +231,50 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onNavigate, isLoggedIn
                     </div>
                 </section>
 
+                {/* How It Works Section */}
+                <section id="how-it-works" className="py-24 scroll-mt-24">
+                    <div className="text-center mb-16">
+                        <span className="text-xs font-bold text-brand-orange tracking-widest uppercase mb-2 block">How It Works</span>
+                        <h2 className="text-4xl font-display font-bold text-brand-black mb-4">Your Safety Net in 4 Steps</h2>
+                        <p className="text-gray-600 max-w-lg mx-auto">SubSafe uses AI to scan your post before you hit publish — so you never get caught by surprise.</p>
+                    </div>
+                    <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 px-4">
+                        {FEATURES.map((feature, idx) => (
+                            <div
+                                key={idx}
+                                className="group relative bg-white rounded-[32px] p-8 border border-gray-100/60 shadow-soft transition-all duration-500 hover:shadow-soft-xl hover:-translate-y-2 overflow-hidden animate-in fade-in slide-in-from-bottom-8 fill-mode-backwards"
+                                style={{ animationDelay: `${idx * 150}ms` }}
+                            >
+                                {/* Hover Gradient Background */}
+                                <div className="absolute inset-0 bg-linear-to-br from-brand-lime/10 via-transparent to-brand-orange/5 opacity-0 group-hover:opacity-100 transition-opacity duration-700 ease-in-out" />
+
+                                {/* Giant Number Watermark */}
+                                <div className="absolute -bottom-8 -right-8 text-[10rem] font-display font-bold text-gray-50 group-hover:text-brand-lime/10 transition-colors duration-700 pointer-events-none select-none leading-none">
+                                    {idx + 1}
+                                </div>
+
+                                <div className="relative z-10 flex flex-col h-full">
+                                    {/* Icon Container */}
+                                    <div className="w-16 h-16 bg-white rounded-2xl flex items-center justify-center text-3xl mb-8 shadow-sm border border-gray-100 group-hover:border-brand-lime/20 group-hover:shadow-md group-hover:scale-110 group-hover:-rotate-3 transition-all duration-500 ease-out">
+                                        <span className="filter drop-shadow-sm transform group-hover:scale-110 transition-transform duration-500">{feature.icon}</span>
+                                    </div>
+
+                                    <h3 className="text-xl font-bold font-display text-brand-black mb-3 group-hover:text-brand-orange transition-colors duration-300">
+                                        {feature.title}
+                                    </h3>
+
+                                    <p className="text-sm text-gray-500 leading-relaxed font-medium mb-8">
+                                        {feature.description}
+                                    </p>
+
+                                    {/* Decorative line */}
+                                    <div className="mt-auto h-1 w-12 bg-gray-100 rounded-full group-hover:w-full group-hover:bg-linear-to-r group-hover:from-brand-lime group-hover:to-brand-orange transition-all duration-700 ease-out origin-left" />
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                </section>
+
                 {/* Pricing Section */}
                 <section id="pricing" className="py-24 scroll-mt-24">
                     <div className="text-center mb-16">
@@ -245,7 +289,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onNavigate, isLoggedIn
                                     <span className="text-4xl font-display font-bold">{tier.price}</span>
                                     <span className="text-sm ml-2 opacity-60">/month</span>
                                 </div>
-                                <ul className="space-y-4 mb-8 flex-grow">
+                                <ul className="space-y-4 mb-8 grow">
                                     {(tier.features || []).map((f: string, i: number) => (
                                         <li key={i} className="flex gap-3 items-center text-sm">
                                             <CheckCircle size={16} className={tier.name === 'Pro Creator' ? 'text-brand-lime' : 'text-green-500'} />
