@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import { NeoButton } from '../ui/NeoButton';
 import { Check, Loader2 } from 'lucide-react';
+import LoadingScreen from '../ui/LoadingScreen';
 
 interface PricingProps {
     onClose?: () => void;
@@ -54,8 +55,12 @@ export const Pricing: React.FC<PricingProps> = ({ onClose }) => {
 
     if (isLoading) {
         return (
-            <div className="flex items-center justify-center p-12">
-                <Loader2 className="animate-spin text-brand-orange" size={32} />
+            <div className="min-h-[400px] relative">
+                <LoadingScreen
+                    fullPage={false}
+                    message="Updating Plans"
+                    subMessage="Fetching latest pricing options..."
+                />
             </div>
         );
     }

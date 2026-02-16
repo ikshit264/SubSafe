@@ -2,8 +2,8 @@
 
 import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import { Loader2 } from 'lucide-react';
 import HistoryView, { HistoryItem } from '@/components/dashboard/HistoryView';
+import LoadingScreen from '@/components/ui/LoadingScreen';
 
 export default function HistoryPage() {
     const router = useRouter();
@@ -28,6 +28,7 @@ export default function HistoryPage() {
         fetchHistory();
     }, []);
 
+
     const clearHistory = async () => {
         if (confirm('Are you sure you want to clear your history? This will delete all your reports permanently.')) {
             try {
@@ -46,13 +47,9 @@ export default function HistoryPage() {
     };
 
     if (isLoading) {
-        return (
-            <div className="h-[60vh] flex flex-col items-center justify-center text-gray-400">
-                <Loader2 className="animate-spin mb-4" size={32} />
-                <p>Loading history...</p>
-            </div>
-        );
+        return <LoadingScreen message="Fetching History" subMessage="Loading your previous analysis reports" />;
     }
+
 
     return (
         <HistoryView

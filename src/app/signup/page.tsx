@@ -3,6 +3,7 @@
 import React, { useEffect, useState } from 'react';
 import { SignupPage } from '@/components/auth/SignupPage';
 import { useRouter } from 'next/navigation';
+import LoadingScreen from '@/components/ui/LoadingScreen';
 
 export default function Signup() {
     const router = useRouter();
@@ -40,12 +41,9 @@ export default function Signup() {
     };
 
     if (isLoading) {
-        return (
-            <div className="min-h-screen bg-brand-bg flex items-center justify-center">
-                <div className="w-12 h-12 border-4 border-brand-orange border-t-transparent rounded-full animate-spin"></div>
-            </div>
-        );
+        return <LoadingScreen message="Join SubSafe" subMessage="Setting up your account..." />;
     }
+
 
     return <SignupPage onLogin={handleLogin} onNavigate={handleNavigate} />;
 }

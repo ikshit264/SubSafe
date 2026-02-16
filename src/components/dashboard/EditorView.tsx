@@ -11,6 +11,8 @@ import {
     Edit3,
     Eye,
 } from 'lucide-react';
+import LoadingScreen from '../ui/LoadingScreen';
+
 
 const POPULAR_SUBREDDITS = ['startups', 'entrepreneur', 'saas', 'marketing', 'tech', 'business'];
 
@@ -188,21 +190,13 @@ export default function EditorView() {
                 </div>
 
                 {/* Right: Results Panel */}
-                <div className="lg:col-span-5">
+                <div className="lg:col-span-5 relative min-h-[500px]">
                     {isAnalyzing ? (
-                        <div className="bg-white rounded-[24px] shadow-soft border border-gray-100 p-8 h-full min-h-[500px] flex flex-col items-center justify-center text-center">
-                            <div className="w-16 h-16 relative mb-6">
-                                <div className="absolute inset-0 bg-brand-lime/30 rounded-full animate-ping"></div>
-                                <div className="relative z-10 w-16 h-16 bg-brand-lime rounded-full flex items-center justify-center">
-                                    <Search className="text-brand-black" />
-                                </div>
-                            </div>
-                            <h3 className="text-xl font-bold mb-2">Analyzing r/{draft.subreddit}</h3>
-                            <p className="text-gray-400 text-sm mb-6 h-5">{LOADING_MESSAGES[loadingStep]}</p>
-                            <div className="w-48 h-2 bg-gray-100 rounded-full overflow-hidden">
-                                <div className="h-full bg-brand-orange transition-all duration-300" style={{ width: `${(loadingStep / 4) * 100}%` }}></div>
-                            </div>
-                        </div>
+                        <LoadingScreen
+                            fullPage={false}
+                            message={`Analyzing r/${draft.subreddit}`}
+                            subMessage={LOADING_MESSAGES[loadingStep]}
+                        />
                     ) : result ? (
                         <ResultsDisplay
                             result={result}

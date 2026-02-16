@@ -3,6 +3,7 @@
 import React, { useEffect, useState } from 'react';
 import { LandingPage } from '@/components/LandingPage';
 import { useRouter } from 'next/navigation';
+import LoadingScreen from '@/components/ui/LoadingScreen';
 
 export default function Home() {
   const router = useRouter();
@@ -38,12 +39,9 @@ export default function Home() {
   };
 
   if (isLoading) {
-    return (
-      <div className="min-h-screen bg-brand-bg flex items-center justify-center">
-        <div className="w-12 h-12 border-4 border-brand-orange border-t-transparent rounded-full animate-spin"></div>
-      </div>
-    );
+    return <LoadingScreen message="SubSafe" subMessage="Preparing your experience..." />;
   }
+
 
   return <LandingPage onNavigate={handleNavigate} isLoggedIn={isLoggedIn} />;
 }

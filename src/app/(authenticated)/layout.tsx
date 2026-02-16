@@ -3,6 +3,7 @@
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { DashboardLayout } from '@/components/dashboard/DashboardLayout';
+import LoadingScreen from '@/components/ui/LoadingScreen';
 
 export default function AuthenticatedLayout({ children }: { children: React.ReactNode }) {
     const router = useRouter();
@@ -33,12 +34,9 @@ export default function AuthenticatedLayout({ children }: { children: React.Reac
     }, [router]);
 
     if (isChecking) {
-        return (
-            <div className="min-h-screen bg-brand-bg flex items-center justify-center">
-                <div className="w-12 h-12 border-4 border-brand-orange border-t-transparent rounded-full animate-spin"></div>
-            </div>
-        );
+        return <LoadingScreen message="Verifying Session" subMessage="Securing your workspace..." />;
     }
+
 
     if (!isAuthed) {
         return null; // Will redirect, render nothing during redirect

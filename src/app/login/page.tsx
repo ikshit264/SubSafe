@@ -3,6 +3,7 @@
 import React from 'react';
 import { LoginPage } from '@/components/auth/LoginPage';
 import { useRouter } from 'next/navigation';
+import LoadingScreen from '@/components/ui/LoadingScreen';
 
 export default function Login() {
     const router = useRouter();
@@ -40,12 +41,9 @@ export default function Login() {
     };
 
     if (isLoading) {
-        return (
-            <div className="min-h-screen bg-brand-bg flex items-center justify-center">
-                <div className="w-12 h-12 border-4 border-brand-orange border-t-transparent rounded-full animate-spin"></div>
-            </div>
-        );
+        return <LoadingScreen message="Welcome Back" subMessage="Preparing login..." />;
     }
+
 
     return <LoginPage onLogin={handleLogin} onNavigate={handleNavigate} />;
 }

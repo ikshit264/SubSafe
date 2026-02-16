@@ -3,9 +3,10 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useRouter } from 'next/navigation';
 import { ResultsDisplay } from '@/components/dashboard/ResultsDisplay';
-import { ArrowLeft, Loader2, Calendar, MessageSquare } from 'lucide-react';
+import { ArrowLeft, Calendar, MessageSquare } from 'lucide-react';
 import { NeoButton } from '@/components/ui/NeoButton';
 import { HistoryItem } from '@/components/dashboard/HistoryView';
+import LoadingScreen from '@/components/ui/LoadingScreen';
 
 export default function HistoryDetailPage() {
     const params = useParams();
@@ -31,13 +32,9 @@ export default function HistoryDetailPage() {
     }, [params.id]);
 
     if (isLoading) {
-        return (
-            <div className="h-[60vh] flex flex-col items-center justify-center text-gray-400">
-                <Loader2 className="animate-spin mb-4" size={32} />
-                <p>Loading report...</p>
-            </div>
-        );
+        return <LoadingScreen message="Loading report..." subMessage="Fetching your analysis results" />;
     }
+
 
     if (!item) {
         return (
