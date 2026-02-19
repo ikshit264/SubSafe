@@ -20,59 +20,25 @@ export async function POST(req: Request) {
             return NextResponse.json({ error: 'Invalid product' }, { status: 400 });
         }
 
-        const apiKey = process.env.DODO_PAYMENTS_API_KEY;
-        if (!apiKey || apiKey === 'YOUR_DODO_KEY') {
-            return NextResponse.json({ error: 'Dodo Payments API Key is not configured' }, { status: 500 });
-        }
-
-        // The user specified to make it live, not test. 
-        // Based on the docs, the live API endpoint is typically https://api.dodopayments.com
-        const baseUrl = 'https://live.dodopayments.com';
-
-        const response = await fetch(`${baseUrl}/payments`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${apiKey}`,
-            },
-            body: JSON.stringify({
-                product_cart: [{ product_id: productId, quantity: 1 }],
-                payment_link: true,
-                return_url: `${process.env.BASE_URL || 'http://localhost:3000'}/dashboard?payment=success`,
-                metadata: {
-                    userId: user.userId || user.id,
-                },
-            }),
+        // Fetch full user details for the customer object
+        const fullUser = await prisma.user.findUnique({
+            where: { id: user.userId || user.id }
         });
 
-        // Read raw text first to avoid JSON parse errors on empty responses
-        const responseText = await response.text();
-        console.log(`Dodo API response [${response.status}]:`, responseText.substring(0, 500));
-
-        if (!responseText) {
-            console.error('Dodo Payments returned empty response. Status:', response.status);
-            return NextResponse.json({ error: 'Payment provider returned an empty response. Please check your API key and product ID.' }, { status: 502 });
+        if (!fullUser) {
+            return NextResponse.json({ error: 'User not found' }, { status: 404 });
         }
 
-        let data;
-        try {
-            data = JSON.parse(responseText);
-        } catch {
-            console.error('Dodo Payments returned non-JSON:', responseText.substring(0, 300));
-            return NextResponse.json({ error: 'Payment provider returned an invalid response.' }, { status: 502 });
-        }
-
-        if (!response.ok) {
-            console.error('Dodo Payments Error:', data);
-            return NextResponse.json({ error: data.message || data.error || 'Payment initiation failed' }, { status: response.status });
-        }
-
-        // Dodo returns payment_link or checkout_url depending on the endpoint
-        const checkoutUrl = data.payment_link || data.checkout_url;
-        if (!checkoutUrl) {
-            console.error('No checkout URL in Dodo response:', data);
-            return NextResponse.json({ error: 'No checkout URL received from payment provider.' }, { status: 502 });
-        }
+        // Dodo Payments Static Checkout Links
+        // We append metadata via query parameters: metadata_{key}={value}
+        // This ensures the webhook knows who made the purchase (userId)
+        
+        let checkoutUrl = `https://checkout.dodopayments.com/buy/${productId}?quantity=1`;
+        
+        // Append metadata manually
+        checkoutUrl += `&metadata_userId=${fullUser.id}`;
+        // Also append success URL to redirect back to dashboard
+        checkoutUrl += `&redirect_url=${encodeURIComponent(`${process.env.BASE_URL || 'http://localhost:3000'}/dashboard?payment=success`)}`;
 
         return NextResponse.json({ url: checkoutUrl });
     } catch (err) {
