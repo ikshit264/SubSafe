@@ -110,66 +110,6 @@ export const SettingsView: React.FC = () => {
                         </div>
                     </div>
                 </div>
-
-                {/* Subscription Card */}
-                <div>
-                    <div className="bg-brand-black text-white rounded-[24px] p-8 shadow-soft-lg relative overflow-hidden">
-                        <div className="relative z-10">
-                            <h3 className="text-lg font-bold mb-2 flex items-center gap-2">
-                                <CreditCard size={18} /> Current Plan
-                            </h3>
-                            <div className="text-3xl font-display font-bold text-brand-lime mb-1">{planLabel}</div>
-
-                            {isUnlimited ? (
-                                <p className="text-gray-400 text-sm mb-6">Unlimited analyses ✨</p>
-                            ) : (
-                                <p className="text-gray-400 text-sm mb-6">{credits} check{credits !== 1 ? 's' : ''} remaining today.</p>
-                            )}
-
-                            {!isUnlimited && (
-                                <div className="space-y-3 mb-8">
-                                    <div className="flex justify-between text-sm">
-                                        <span>Usage</span>
-                                        <span className="font-bold">{creditsUsed}/3</span>
-                                    </div>
-                                    <div className="w-full bg-white/10 rounded-full h-1.5">
-                                        <div
-                                            className="bg-brand-lime h-1.5 rounded-full transition-all duration-500"
-                                            style={{ width: `${(creditsUsed / 3) * 100}%` }}
-                                        ></div>
-                                    </div>
-                                </div>
-                            )}
-
-                            {!isUnlimited && (
-                                <NeoButton
-                                    variant="accent"
-                                    className="w-full"
-                                    onClick={async () => {
-                                        try {
-                                            const res = await fetch('/api/payments/checkout', {
-                                                method: 'POST',
-                                                headers: { 'Content-Type': 'application/json' },
-                                                body: JSON.stringify({ productId: 'pdt_0NYUSqGhcvA2Y23XGKOYn' }) // Pro Creator
-                                            });
-                                            const data = await res.json();
-                                            if (data.url) {
-                                                window.location.href = data.url;
-                                            } else {
-                                                alert(data.error || 'Failed to start checkout');
-                                            }
-                                        } catch (err) {
-                                            console.error(err);
-                                            alert('An error occurred. Please try again.');
-                                        }
-                                    }}
-                                >
-                                    Upgrade to Pro
-                                </NeoButton>
-                            )}
-                        </div>
-                    </div>
-                </div>
             </div>
         </div>
     );

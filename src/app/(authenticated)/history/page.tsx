@@ -1,61 +1,61 @@
-'use client';
+import { Metadata } from 'next';
+import HistoryClient from './HistoryClient';
 
-import React, { useState, useEffect } from 'react';
-import { useRouter } from 'next/navigation';
-import HistoryView, { HistoryItem } from '@/components/dashboard/HistoryView';
-import LoadingScreen from '@/components/ui/LoadingScreen';
+export const metadata: Metadata = {
+    title: "Your Report History — SubSafe Reddit Post Analysis",
+    description: "Access and review all your previous Reddit post compliance reports. Track your progress, revisit optimized content, and manage your analysis history safely.",
+    keywords: [
+        "Reddit Analysis History",
+        "SubSafe Report Archive",
+        "Previous Reddit Post Checks",
+        "Reddit Compliance History",
+        "Saved Reddit Optimization Reports",
+        "SubSafe User Dashboard",
+        "Reddit Account Health Logs",
+        "Track Reddit Marketing Progress",
+        "My SubSafe Reports",
+        "Reddit Content Archive"
+    ],
+};
 
 export default function HistoryPage() {
-    const router = useRouter();
-    const [history, setHistory] = useState<HistoryItem[]>([]);
-    const [isLoading, setIsLoading] = useState(true);
-
-    const fetchHistory = async () => {
-        try {
-            const res = await fetch('/api/history');
-            if (res.ok) {
-                const data = await res.json();
-                setHistory(data.history);
-            }
-        } catch (err) {
-            console.error('Failed to fetch history:', err);
-        } finally {
-            setIsLoading(false);
-        }
-    };
-
-    useEffect(() => {
-        fetchHistory();
-    }, []);
-
-
-    const clearHistory = async () => {
-        if (confirm('Are you sure you want to clear your history? This will delete all your reports permanently.')) {
-            try {
-                const res = await fetch('/api/history', { method: 'DELETE' });
-                if (res.ok) {
-                    setHistory([]);
-                }
-            } catch (err) {
-                console.error('Failed to clear history:', err);
-            }
-        }
-    };
-
-    const handleLoadItem = (item: HistoryItem) => {
-        router.push(`/history/${item.id}`);
-    };
-
-    if (isLoading) {
-        return <LoadingScreen message="Fetching History" subMessage="Loading your previous analysis reports" />;
-    }
-
-
     return (
-        <HistoryView
-            history={history}
-            onClearHistory={clearHistory}
-            onLoadItem={handleLoadItem}
-        />
+        <>
+            <script
+                type="application/ld+json"
+                dangerouslySetInnerHTML={{
+                    __html: JSON.stringify({
+                        "@context": "https://schema.org",
+                        "@type": "WebPage",
+                        "name": "SubSafe History",
+                        "description": "User's previous Reddit report history and analysis archives.",
+                        "breadcrumb": {
+                            "@type": "BreadcrumbList",
+                            "itemListElement": [
+                                {
+                                    "@type": "ListItem",
+                                    "position": 1,
+                                    "name": "Home",
+                                    "item": "https://subsafe.com"
+                                },
+                                {
+                                    "@type": "ListItem",
+                                    "position": 2,
+                                    "name": "Dashboard",
+                                    "item": "https://subsafe.com/dashboard"
+                                },
+                                {
+                                    "@type": "ListItem",
+                                    "position": 3,
+                                    "name": "History",
+                                    "item": "https://subsafe.com/history"
+                                }
+                            ]
+                        }
+                    })
+                }}
+            />
+            <HistoryClient />
+        </>
     );
 }

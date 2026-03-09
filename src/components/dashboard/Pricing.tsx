@@ -29,15 +29,15 @@ export const Pricing: React.FC<PricingProps> = ({ onClose }) => {
         fetchProducts();
     }, []);
 
-    const handleUpgrade = async (product: any) => {
-        if (product.productId === "free_tier") return;
+    const handleUpgrade = async (plan: any) => {
+        if (plan.price === 0) return;
 
-        setLoadingTier(product.name);
+        setLoadingTier(plan.name);
         try {
             const res = await fetch('/api/payments/checkout', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ productId: product.productId }),
+                body: JSON.stringify({ productId: plan.dodoProductId }),
             });
             const data = await res.json();
             if (data.url) {
@@ -69,13 +69,13 @@ export const Pricing: React.FC<PricingProps> = ({ onClose }) => {
         <div className="grid md:grid-cols-3 gap-8">
             {products.map((tier) => (
                 <div
-                    key={tier.productId}
-                    className={`rounded-[32px] p-8 flex flex-col relative transition-all duration-300 hover:scale-[1.02] ${tier.name === "Pro Creator"
-                        ? "bg-brand-black text-white shadow-soft-lg ring-4 ring-brand-lime/20"
+                    key={tier.id}
+                    className={`rounded-[32px] p-8 flex flex-col relative transition-all duration-300 hover:scale-[1.02] ${tier.name === "Creator Plus"
+                        ? "bg-brand-black text-white shadow-soft-lg ring-4 ring-brand-lime/20 md:scale-110 z-10 py-12"
                         : "bg-white text-brand-black border border-gray-100 shadow-soft"
                         }`}
                 >
-                    {tier.name === "Pro Creator" && (
+                    {tier.name === "Creator Plus" && (
                         <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-brand-lime text-brand-black text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-wider">
                             Most Popular
                         </div>
@@ -83,30 +83,30 @@ export const Pricing: React.FC<PricingProps> = ({ onClose }) => {
 
                     <h3 className="text-xl font-bold font-display mb-2">{tier.name}</h3>
                     <div className="flex items-baseline gap-1 mb-6">
-                        <span className="text-4xl font-bold">{tier.price}</span>
-                        <span className={`text-sm font-normal ${tier.name === "Pro Creator" ? "text-gray-400" : "text-gray-500"}`}>/month</span>
+                        <span className="text-4xl font-bold">${tier.price}</span>
+                        <span className={`text-sm font-normal ${tier.name === "Creator Plus" ? "text-gray-400" : "text-gray-500"}`}>/{tier.interval || 'month'}</span>
                     </div>
 
                     <ul className="space-y-4 mb-8 grow">
                         {(tier.features || []).map((feat: string, i: number) => (
                             <li key={i} className="flex items-start gap-3 text-sm font-medium">
-                                <div className={`mt-0.5 w-5 h-5 rounded-full flex items-center justify-center shrink-0 ${tier.name === "Pro Creator" ? "bg-brand-lime text-black" : "bg-gray-100 text-brand-black"
+                                <div className={`mt-0.5 w-5 h-5 rounded-full flex items-center justify-center shrink-0 ${tier.name === "Creator Plus" ? "bg-brand-lime text-black" : "bg-gray-100 text-brand-black"
                                     }`}>
                                     <Check size={12} strokeWidth={3} />
                                 </div>
-                                <span className={tier.name === "Pro Creator" ? "text-gray-300" : "text-gray-600"}>{feat}</span>
+                                <span className={tier.name === "Creator Plus" ? "text-gray-300" : "text-gray-600"}>{feat}</span>
                             </li>
                         ))}
                     </ul>
 
                     <NeoButton
-                        variant={tier.name === "Pro Creator" ? "accent" : "primary"}
+                        variant={tier.name === "Creator Plus" ? "accent" : "primary"}
                         size="lg"
                         className="w-full"
-                        disabled={tier.productId === "free_tier" || !!loadingTier}
+                        disabled={tier.price === 0 || !!loadingTier}
                         onClick={() => handleUpgrade(tier)}
                     >
-                        {loadingTier === tier.name ? <Loader2 className="animate-spin" size={18} /> : (tier.productId === "free_tier" ? "Current Plan" : tier.cta)}
+                        {loadingTier === tier.name ? <Loader2 className="animate-spin" size={18} /> : (tier.price === 0 ? "Current Plan" : tier.cta || "Upgrade Now")}
                     </NeoButton>
                 </div>
             ))}

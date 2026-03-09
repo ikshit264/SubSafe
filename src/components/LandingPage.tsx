@@ -56,12 +56,15 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onNavigate, isLoggedIn
             {/* Navbar */}
             <nav className="fixed w-full top-0 z-50 bg-brand-bg/90 backdrop-blur-md border-b border-gray-200/50">
                 <div className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
-                    <div className="flex items-center gap-2">
+                    <button
+                        onClick={() => onNavigate('home')}
+                        className="flex items-center gap-2 hover:opacity-80 transition-opacity"
+                    >
                         <div className="w-8 h-8 bg-brand-orange rounded-lg flex items-center justify-center text-white font-bold text-lg transform -rotate-6 shadow-sm">
                             S
                         </div>
                         <span className="text-xl font-display font-bold text-brand-black">{APP_NAME}</span>
-                    </div>
+                    </button>
 
                     <div className="hidden md:flex items-center gap-8 text-sm font-medium text-gray-500">
                         <a href="#demo" className="hover:text-black transition-colors">Live Demo</a>
@@ -281,28 +284,42 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onNavigate, isLoggedIn
                         <h2 className="text-4xl font-display font-bold text-brand-black mb-4">Simple, Transparent Pricing</h2>
                         <p className="text-gray-600">Start for free, upgrade for power.</p>
                     </div>
-                    <div className="grid md:grid-cols-3 gap-8">
+                    <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto items-center">
                         {products.map((tier, idx) => (
-                            <div key={idx} className={`rounded-[32px] p-8 flex flex-col ${tier.name === 'Pro Creator' ? 'bg-brand-black text-white shadow-lg scale-105 z-10' : 'bg-white text-brand-black border border-gray-100'}`}>
-                                <h3 className="text-lg font-bold mb-4">{tier.name}</h3>
-                                <div className="mb-8 items-baseline flex">
-                                    <span className="text-4xl font-display font-bold">{tier.price}</span>
-                                    <span className="text-sm ml-2 opacity-60">/month</span>
+                            <div
+                                key={idx}
+                                className={`rounded-[32px] p-8 flex flex-col relative transition-all duration-300 ${tier.name === 'Creator Plus'
+                                    ? 'bg-brand-black text-white shadow-soft-lg ring-4 ring-brand-lime/30 md:scale-110 z-10 py-12'
+                                    : 'bg-white text-brand-black border border-gray-100 shadow-soft'
+                                    }`}
+                            >
+                                {tier.name === 'Creator Plus' && (
+                                    <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-brand-lime text-brand-black text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-wider">
+                                        Most Popular
+                                    </div>
+                                )}
+
+                                <div className="mb-4">
+                                    <h3 className="text-lg font-bold">{tier.name}</h3>
+                                    <div className="mt-4 flex items-baseline">
+                                        <span className="text-4xl font-display font-bold">${tier.price}</span>
+                                        <span className={`text-sm ml-2 ${tier.name === 'Creator Plus' ? 'text-gray-400' : 'text-gray-500'}`}>/{tier.interval || 'month'}</span>
+                                    </div>
                                 </div>
                                 <ul className="space-y-4 mb-8 grow">
                                     {(tier.features || []).map((f: string, i: number) => (
                                         <li key={i} className="flex gap-3 items-center text-sm">
-                                            <CheckCircle size={16} className={tier.name === 'Pro Creator' ? 'text-brand-lime' : 'text-green-500'} />
-                                            <span className="opacity-80">{f}</span>
+                                            <CheckCircle size={16} className={tier.name === 'Creator Plus' ? 'text-brand-lime' : 'text-green-500'} />
+                                            <span className={tier.name === 'Creator Plus' ? 'text-gray-300' : 'text-gray-600'}>{f}</span>
                                         </li>
                                     ))}
                                 </ul>
                                 <NeoButton
                                     onClick={() => onNavigate(isLoggedIn ? 'dashboard' : 'signup')}
-                                    variant={tier.name === 'Pro Creator' ? 'accent' : 'outline'}
+                                    variant={tier.name === 'Creator Plus' ? 'accent' : 'outline'}
                                     className="w-full"
                                 >
-                                    {isLoggedIn ? 'Upgrade Now' : tier.cta}
+                                    {isLoggedIn ? 'Upgrade Now' : (tier.cta || "Get Started")}
                                 </NeoButton>
                             </div>
                         ))}

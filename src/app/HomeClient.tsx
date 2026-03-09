@@ -1,0 +1,46 @@
+'use client';
+
+import React, { useEffect, useState } from 'react';
+import { LandingPage } from '@/components/LandingPage';
+import { useRouter } from 'next/navigation';
+import LoadingScreen from '@/components/ui/LoadingScreen';
+
+export default function HomeClient() {
+    const router = useRouter();
+    const [isLoading, setIsLoading] = useState(true);
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+    useEffect(() => {
+        const checkAuth = async () => {
+            try {
+                const res = await fetch('/api/auth/me');
+                if (res.ok) {
+                    const data = await res.json();
+                    if (data.id) {
+                        setIsLoggedIn(true);
+                    }
+                }
+            } catch (err) {
+                console.error(err);
+            } finally {
+                setIsLoading(false);
+            }
+        };
+        checkAuth();
+    }, []);
+
+    const handleNavigate = (view: string, id?: number) => {
+        if (view === 'login') router.push('/login');
+        else if (view === 'signup') router.push('/signup');
+        else if (view === 'dashboard') router.push('/dashboard');
+        else if (view === 'blog') router.push('/blog');
+        else if (view === 'blog-post' && id) router.push(`/blog/${id}`);
+        else router.push('/');
+    };
+
+    if (isLoading) {
+        return <LoadingScreen message="SubSafe" subMessage="Preparing your experience..." />;
+    }
+
+    return <LandingPage onNavigate={handleNavigate} isLoggedIn={isLoggedIn} />;
+}

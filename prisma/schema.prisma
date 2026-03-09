@@ -32,27 +32,28 @@ model AnalysisRequest {
     createdAt DateTime @default(now())
 }
 
-model Product {
-    id        String   @id @default(auto()) @map("_id") @db.ObjectId
-    name      String
-    price     String
-    features  String[]
-    color     String
-    cta       String
-    productId String   @unique // Dodo Payment Product ID: e.g., pdt_...
-    active    Boolean  @default(true)
-    createdAt DateTime @default(now())
-    updatedAt DateTime @updatedAt
+model Plan {
+    id            String    @id @default(auto()) @map("_id") @db.ObjectId
+    name          String
+    price         Int
+    interval      String    @default("month")
+    features      String[]
+    dodoProductId String?   @unique // Dodo Payment Product ID: e.g., pdt_...
+    active        Boolean   @default(true)
+    createdAt     DateTime  @default(now())
+    updatedAt     DateTime  @updatedAt
+    payments      Payment[]
 }
 
 model Payment {
     id        String   @id @default(auto()) @map("_id") @db.ObjectId
     userId    String   @db.ObjectId
     user      User     @relation(fields: [userId], references: [id])
+    planId    String   @db.ObjectId
+    plan      Plan     @relation(fields: [planId], references: [id])
     amount    Float
     currency  String
     status    String // succeeded, pending, failed
     dodoId    String   @unique // Dodo Payment ID
-    productId String
     createdAt DateTime @default(now())
 }

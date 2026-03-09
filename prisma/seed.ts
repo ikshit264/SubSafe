@@ -2,42 +2,41 @@ import { PrismaClient } from '@prisma/client';
 const prisma = new PrismaClient();
 
 async function main() {
-    const products = [
+    const plans = [
         {
-            name: "Starter",
-            price: "$0",
+            name: "Hobby",
+            price: 0,
+            interval: "month",
             features: ["3 Post Checks / Day", "Basic Grammar Check", "Single Subreddit Support"],
-            color: "bg-white",
-            cta: "Start Free",
-            productId: "free_tier",
             active: true,
         },
         {
-            name: "Pro Creator",
-            price: "$9",
+            name: "Creator Plus",
+            price: 9,
+            interval: "month",
             features: ["Unlimited Checks", "Deep Rule Analysis", "Auto-Rewriter", "Ban History Protection"],
-            color: "bg-brand-yellow",
-            cta: "Go Pro",
-            productId: process.env.DODO_PRO_PLAN_ID || "pdt_0NYUSqGhcvA2Y23XGKOYn",
+            dodoProductId: "p_123",
             active: true,
         },
         {
             name: "Agency",
-            price: "$29",
+            price: 29,
+            interval: "month",
             features: ["Multiple Accounts", "API Access", "Bulk Upload", "Priority Support"],
-            color: "bg-brand-orange",
-            cta: "Plan Agency",
-            productId: process.env.DODO_AGENCY_PLAN_ID || "pdt_0NYUSuMy2q91d0ALOcHJj",
+            dodoProductId: "p_456",
             active: true,
         }
     ];
 
-    console.log('Seeding products from environment variables...');
-    for (const product of products) {
-        await prisma.product.upsert({
-            where: { productId: product.productId },
-            update: product,
-            create: product,
+    console.log('Seeding plans...');
+    for (const plan of plans) {
+        await prisma.plan.upsert({
+            where: { dodoProductId: plan.dodoProductId || "free_tier" },
+            update: plan,
+            create: {
+                ...plan,
+                dodoProductId: plan.dodoProductId || "free_tier"
+            },
         });
     }
     console.log('Seeding finished.');

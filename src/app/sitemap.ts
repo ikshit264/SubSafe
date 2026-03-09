@@ -8,31 +8,31 @@ export default function sitemap(): MetadataRoute.Sitemap {
         {
             url: siteUrl,
             lastModified: new Date(),
-            changeFrequency: "weekly",
+            changeFrequency: "daily",
             priority: 1.0,
         },
         {
             url: `${siteUrl}/blog`,
             lastModified: new Date(),
-            changeFrequency: "weekly",
-            priority: 0.8,
+            changeFrequency: "daily",
+            priority: 0.9,
         },
         {
             url: `${siteUrl}/payments`,
             lastModified: new Date(),
-            changeFrequency: "monthly",
-            priority: 0.6,
+            changeFrequency: "weekly",
+            priority: 0.7,
         },
         {
             url: `${siteUrl}/login`,
             lastModified: new Date(),
-            changeFrequency: "yearly",
-            priority: 0.3,
+            changeFrequency: "monthly",
+            priority: 0.2,
         },
         {
             url: `${siteUrl}/signup`,
             lastModified: new Date(),
-            changeFrequency: "yearly",
+            changeFrequency: "monthly",
             priority: 0.4,
         },
     ];
@@ -40,8 +40,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
     const blogPages: MetadataRoute.Sitemap = BLOG_POSTS.map((post) => ({
         url: `${siteUrl}/blog/${post.id}`,
         lastModified: new Date(),
-        changeFrequency: "monthly" as const,
-        priority: 0.7,
+        changeFrequency: "weekly" as const,
+        priority: 0.8,
     }));
 
     return [...staticPages, ...blogPages];

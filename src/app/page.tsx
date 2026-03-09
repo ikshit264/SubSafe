@@ -1,47 +1,62 @@
-'use client';
+import { Metadata } from 'next';
+import HomeClient from './HomeClient';
 
-import React, { useEffect, useState } from 'react';
-import { LandingPage } from '@/components/LandingPage';
-import { useRouter } from 'next/navigation';
-import LoadingScreen from '@/components/ui/LoadingScreen';
+export const metadata: Metadata = {
+  title: "SubSafe — Reddit Shadowban Checker & Compliance Engine",
+  description: "Check if your Reddit account is shadowbanned and analyze your posts against subreddit rules instantly. SubSafe is the ultimate compliance engine for Redditors.",
+  keywords: [
+    "Reddit Shadowban Checker",
+    "Subreddit Rules Analyzer",
+    "Reddit Post Compliance",
+    "Avoid Reddit Ban",
+    "Reddit Marketing Tool",
+    "Reddit Automated Moderation",
+    "Post on Reddit Safely",
+    "Reddit Compliance Engine",
+    "Reddit Account Health Test",
+    "Free Reddit Shadowban Test"
+  ],
+  openGraph: {
+    title: "SubSafe — #1 Reddit Shadowban Checker",
+    description: "Instantly check your Reddit account's health and post compliance. Don't get banned, use SubSafe.",
+    url: '/',
+    siteName: 'SubSafe',
+    images: [
+      {
+        url: '/og-image.png',
+        width: 1200,
+        height: 630,
+        alt: 'SubSafe Landing Page',
+      },
+    ],
+  },
+};
 
 export default function Home() {
-  const router = useRouter();
-  const [isLoading, setIsLoading] = useState(true);
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-
-  useEffect(() => {
-    const checkAuth = async () => {
-      try {
-        const res = await fetch('/api/auth/me');
-        if (res.ok) {
-          const data = await res.json();
-          if (data.id) {
-            setIsLoggedIn(true);
-          }
-        }
-      } catch (err) {
-        console.error(err);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-    checkAuth();
-  }, []);
-
-  const handleNavigate = (view: string, id?: number) => {
-    if (view === 'login') router.push('/login');
-    else if (view === 'signup') router.push('/signup');
-    else if (view === 'dashboard') router.push('/dashboard');
-    else if (view === 'blog') router.push('/blog');
-    else if (view === 'blog-post' && id) router.push(`/blog/${id}`);
-    else router.push('/');
-  };
-
-  if (isLoading) {
-    return <LoadingScreen message="SubSafe" subMessage="Preparing your experience..." />;
-  }
-
-
-  return <LandingPage onNavigate={handleNavigate} isLoggedIn={isLoggedIn} />;
+  return (
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "WebPage",
+            "name": "SubSafe Home",
+            "description": "Reddit compliance and shadowban checker tool.",
+            "url": "https://subsafe.com",
+            "breadcrumb": {
+              "@type": "BreadcrumbList",
+              "itemListElement": [{
+                "@type": "ListItem",
+                "position": 1,
+                "name": "Home",
+                "item": "https://subsafe.com"
+              }]
+            }
+          })
+        }}
+      />
+      <HomeClient />
+    </>
+  );
 }

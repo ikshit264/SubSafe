@@ -1,24 +1,39 @@
-'use client';
+import { Metadata } from 'next';
+import BlogPostClient from './BlogPostClient';
 
-import { BlogPostPage } from '@/components/BlogPostPage';
-import { useRouter, useParams } from 'next/navigation';
+type Props = {
+    params: Promise<{ id: string }>;
+};
+
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+    const id = (await params).id;
+    // In a real app, you'd fetch the post title from a DB/CMS here.
+    // For now, we'll use a generic descriptive title that includes the ID or a placeholder.
+    return {
+        title: `Blog Post #${id} — Reddit Insights & Compliance | SubSafe`,
+        description: `Deep dive into Reddit marketing strategies and compliance. Read our latest insights on post ID ${id} and learn how to grow your community safely.`,
+    };
+}
 
 export default function BlogPost() {
-    const router = useRouter();
-    const params = useParams();
-    const id = params.id ? parseInt(params.id as string) : null;
-
-    const handleNavigate = (view: string, id?: number) => {
-        if (view === 'blog') router.push('/blog');
-        else if (view === 'landing') router.push('/');
-        else if (view === 'login') router.push('/login');
-        else if (view === 'signup') router.push('/signup');
-        else if (view === 'dashboard') router.push('/dashboard');
-        else if (view === 'blog-post' && id) router.push(`/blog/${id}`);
-        else router.push('/');
-    };
-
-    if (!id) return null;
-
-    return <BlogPostPage id={id} onNavigate={handleNavigate} />;
+    return (
+        <>
+            <script
+                type="application/ld+json"
+                dangerouslySetInnerHTML={{
+                    __html: JSON.stringify({
+                        "@context": "https://schema.org",
+                        "@type": "BlogPosting",
+                        "headline": "Reddit Strategy Deep Dive",
+                        "description": "Advanced insights into Reddit compliance and growth.",
+                        "author": {
+                            "@type": "Organization",
+                            "name": "SubSafe"
+                        }
+                    })
+                }}
+            />
+            <BlogPostClient />
+        </>
+    );
 }

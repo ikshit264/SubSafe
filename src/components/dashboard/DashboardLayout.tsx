@@ -7,6 +7,7 @@ import {
     History,
     Settings,
     LogOut,
+    CreditCard,
 } from 'lucide-react';
 import { CreditProvider, useCreditContext } from '@/lib/CreditContext';
 import { syncUpvoteLogout } from '@/lib/upvote-sync';
@@ -47,14 +48,18 @@ function DashboardInner({ children }: { children: React.ReactNode }) {
         <div className="min-h-screen bg-brand-bg font-sans flex text-brand-black">
             {/* Sidebar */}
             <aside className="hidden md:flex flex-col w-64 bg-white border-r border-gray-200 fixed h-full z-20">
-                <div className="p-6 border-b border-gray-100 flex items-center gap-2">
+                <button 
+                    onClick={() => router.push('/')}
+                    className="p-6 border-b border-gray-100 flex items-center gap-2 hover:opacity-80 transition-opacity w-full text-left"
+                >
                     <div className="w-8 h-8 bg-brand-orange rounded-lg flex items-center justify-center text-white font-bold text-lg transform -rotate-6 shadow-sm">R</div>
                     <span className="font-display font-bold text-xl">SubSafe</span>
-                </div>
+                </button>
 
                 <div className="flex-1 p-4 space-y-2">
                     <NavItem href="/dashboard" icon={LayoutDashboard} label="Analysis" />
                     <NavItem href="/history" icon={History} label="History" />
+                    <NavItem href="/payments" icon={CreditCard} label="Payments" />
                     <NavItem href="/settings" icon={Settings} label="Settings" />
                 </div>
 
@@ -96,10 +101,13 @@ function DashboardInner({ children }: { children: React.ReactNode }) {
             <main className="flex-1 md:ml-64 p-4 md:p-8 max-w-7xl mx-auto w-full">
                 {/* Mobile Header */}
                 <div className="md:hidden flex justify-between items-center mb-6">
-                    <div className="flex items-center gap-2">
+                    <button 
+                        onClick={() => router.push('/')}
+                        className="flex items-center gap-2 hover:opacity-80 transition-opacity"
+                    >
                         <div className="w-8 h-8 bg-brand-orange rounded-lg flex items-center justify-center text-white font-bold">R</div>
                         <span className="font-bold text-lg">SubSafe</span>
-                    </div>
+                    </button>
                     <button onClick={() => setShowLogoutModal(true)}><LogOut size={20} className="text-gray-500" /></button>
                 </div>
 
@@ -109,6 +117,7 @@ function DashboardInner({ children }: { children: React.ReactNode }) {
                 <div className="md:hidden fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 p-2 flex justify-around z-50">
                     <button onClick={() => router.push('/dashboard')} className={`p-2 rounded-lg ${isActive('/dashboard') ? 'text-brand-orange' : 'text-gray-400'}`}><LayoutDashboard /></button>
                     <button onClick={() => router.push('/history')} className={`p-2 rounded-lg ${isActive('/history') ? 'text-brand-orange' : 'text-gray-400'}`}><History /></button>
+                    <button onClick={() => router.push('/payments')} className={`p-2 rounded-lg ${isActive('/payments') ? 'text-brand-orange' : 'text-gray-400'}`}><CreditCard /></button>
                     <button onClick={() => router.push('/settings')} className={`p-2 rounded-lg ${isActive('/settings') ? 'text-brand-orange' : 'text-gray-400'}`}><Settings /></button>
                 </div>
             </main>

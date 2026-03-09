@@ -9,13 +9,8 @@ export default function robots(): MetadataRoute.Robots {
                 userAgent: "*",
                 allow: ["/", "/blog", "/blog/*", "/login", "/signup", "/payments"],
                 disallow: [
-                    "/dashboard",
-                    "/history",
-                    "/history/*",
-                    "/settings",
-                    "/api/*",
-                    "/payments/success",
-                    "/payments/error",
+                    "/_next/*", // Next.js internal
+                    "/admin/*", // Just in case
                 ],
             },
         ],

@@ -16,42 +16,55 @@ export const metadata: Metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000"),
   title: {
     default: "SubSafe — Post on Reddit Without Getting Banned",
-    template: "%s | SubSafe",
+    template: "%s | SubSafe - Reddit Compliance & Post Optimization",
   },
   description:
-    "SubSafe is an AI-powered Reddit compliance tool. Analyze your posts against subreddit rules, shadowban triggers, and automod filters before you publish.",
+    "SubSafe is the #1 AI-powered Reddit compliance tool. Analyze your posts against subreddit rules, shadowban triggers, and automod filters in real-time. Avoid bans and grow your Reddit presence safely.",
   keywords: [
-    "Reddit compliance tool",
-    "Reddit post checker",
-    "subreddit rules checker",
-    "Reddit shadowban detector",
-    "Reddit automod filter",
-    "Reddit marketing tool",
-    "Reddit post analyzer",
-    "avoid Reddit ban",
+    "Reddit Shadowban Checker",
+    "Reddit Compliance Tools",
+    "Reddit Keyword Monitoring",
+    "Reddit Moderation Tools",
+    "Reddit Account Health",
+    "Reddit SEO",
+    "Subreddit Rules Analyzer",
+    "Reddit Post Optimization",
+    "Reddit Marketing Tools",
+    "Reddit Growth Strategies",
+    "How to avoid Reddit ban",
     "Reddit content optimizer",
+    "Reddit automod filter check",
+    "Subreddit rules checker",
+    "New Reddit account tips",
   ],
-  authors: [{ name: "SubSafe" }],
+  authors: [{ name: "SubSafe Team" }],
   creator: "SubSafe",
   publisher: "SubSafe",
   openGraph: {
     type: "website",
     locale: "en_US",
     siteName: "SubSafe",
-    title: "SubSafe — Post on Reddit Without Getting Banned",
+    title: "SubSafe — Reddit Compliance & Post Optimization Engine",
     description:
-      "AI-powered Reddit post compliance checker. Analyze subreddit rules, avoid bans, and optimize your posts for virality.",
+      "Stop getting banned on Reddit. Use SubSafe to analyze subreddit rules, identify shadowban triggers, and optimize your posts for maximum visibility and safety.",
     url: "/",
   },
   twitter: {
     card: "summary_large_image",
-    title: "SubSafe — Post on Reddit Without Getting Banned",
+    title: "SubSafe — The Smart Way to Post on Reddit",
     description:
-      "AI-powered Reddit post compliance checker. Analyze subreddit rules, avoid bans, and optimize your posts for virality.",
+      "AI-powered Reddit post compliance checker. Analyze rules, avoid bans, and optimize your posts for maximum engagement.",
   },
   robots: {
     index: true,
     follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+    },
   },
   alternates: {
     canonical: "/",
@@ -63,9 +76,14 @@ const organizationJsonLd = {
   "@type": "Organization",
   name: "SubSafe",
   url: process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000",
+  logo: `${process.env.NEXT_PUBLIC_SITE_URL}/favicon.png`,
   description:
-    "AI-powered Reddit post compliance and optimization tool for marketers and founders.",
+    "SubSafe provides AI-powered Reddit post compliance and optimization tools for marketers, founders, and community managers to ensure safe and effective Reddit engagement.",
   foundingDate: "2024",
+  sameAs: [
+    "https://twitter.com/subsafe",
+    "https://linkedin.com/company/subsafe"
+  ]
 };
 
 const webAppJsonLd = {
@@ -76,7 +94,7 @@ const webAppJsonLd = {
   applicationCategory: "BusinessApplication",
   operatingSystem: "Web",
   description:
-    "Analyze your Reddit posts against subreddit rules, hidden bans, and toxicity filters instantly.",
+    "Analyze your Reddit posts against subreddit rules, hidden bans, and toxicity filters instantly using advanced AI compliance scoring.",
   offers: {
     "@type": "AggregateOffer",
     lowPrice: "0",
