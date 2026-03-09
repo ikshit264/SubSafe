@@ -86,6 +86,8 @@ const webAppJsonLd = {
   },
 };
 
+import UpvoteWidget from "@/components/UpvoteWidget";
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -103,6 +105,7 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{ __html: JSON.stringify(webAppJsonLd) }}
         />
         {children}
+        <UpvoteWidget />
       </body>
     </html>
   );

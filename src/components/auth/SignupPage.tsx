@@ -3,6 +3,7 @@
 import React, { useState } from 'react';
 import { NeoButton } from '../ui/NeoButton';
 import { ArrowLeft } from 'lucide-react';
+import { syncUpvoteLogin } from '@/lib/upvote-sync';
 
 interface SignupPageProps {
     onLogin: () => void;
@@ -24,6 +25,7 @@ export const SignupPage: React.FC<SignupPageProps> = ({ onLogin, onNavigate }) =
             });
             const data = await res.json();
             if (data.success) {
+                syncUpvoteLogin(data.user);
                 onLogin();
             } else {
                 alert(data.error || 'Signup failed');

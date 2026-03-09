@@ -9,6 +9,7 @@ import {
     LogOut,
 } from 'lucide-react';
 import { CreditProvider, useCreditContext } from '@/lib/CreditContext';
+import { syncUpvoteLogout } from '@/lib/upvote-sync';
 
 function DashboardInner({ children }: { children: React.ReactNode }) {
     const router = useRouter();
@@ -23,6 +24,7 @@ function DashboardInner({ children }: { children: React.ReactNode }) {
     const handleLogout = async () => {
         try {
             await fetch('/api/auth/logout', { method: 'POST' });
+            syncUpvoteLogout();
             router.push('/');
         } catch (error) {
             console.error('Logout failed:', error);
