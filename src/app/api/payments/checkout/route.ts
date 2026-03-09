@@ -11,12 +11,12 @@ export async function POST(req: Request) {
             return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
         }
 
-        // Verify productId exists in our DB
-        const product = await prisma.product.findUnique({
-            where: { productId }
+        // Verify productId exists in our DB as a Plan
+        const plan = await prisma.plan.findUnique({
+            where: { dodoProductId: productId }
         });
 
-        if (!product) {
+        if (!plan) {
             return NextResponse.json({ error: 'Invalid product' }, { status: 400 });
         }
 
@@ -32,9 +32,9 @@ export async function POST(req: Request) {
         // Dodo Payments Static Checkout Links
         // We append metadata via query parameters: metadata_{key}={value}
         // This ensures the webhook knows who made the purchase (userId)
-        
+
         let checkoutUrl = `https://checkout.dodopayments.com/buy/${productId}?quantity=1`;
-        
+
         // Append metadata manually
         checkoutUrl += `&metadata_userId=${fullUser.id}`;
         // Also append success URL to redirect back to dashboard
