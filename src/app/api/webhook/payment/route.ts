@@ -26,36 +26,38 @@ export async function POST(req: Request) {
             if (userId) {
                 console.log(`Processing successful payment for User: ${userId}`);
 
+                // Look up the Plan corresponding to the Dodo product ID
+                const planRecord = await prisma.plan.findFirst({
+                    where: { dodoProductId: productId }
+                });
+
+                if (!planRecord) {
+                    console.error(`Plan not found for Dodo product ID: ${productId}`);
+                    return NextResponse.json({ error: 'Plan not found' }, { status: 400 });
+                }
+
                 // 1. Record the payment
                 await prisma.payment.create({
                     data: {
                         userId: userId,
+                        planId: planRecord.id,
                         amount: data.total_amount ? data.total_amount / 100 : 0, // Convert from cents
                         currency: data.currency || 'USD',
                         status: 'succeeded',
-                        dodoId: data.payment_id,
-                        productId: productId
+                        dodoId: data.payment_id
                     }
                 });
 
-                // 2. Determine plan from the product
-                // Look up the product to determine the plan tier
+                // 2. Determine plan from the Plan model
                 let plan = 'pro'; // Default to pro for any paid product
-                const product = await prisma.product.findFirst({
-                    where: { productId: productId }
-                });
-
-                if (product) {
-                    // Map product name to plan tier
-                    const productNameLower = product.name.toLowerCase();
-                    if (productNameLower.includes('agency')) {
-                        plan = 'agency';
-                    } else if (productNameLower.includes('pro')) {
-                        plan = 'pro';
-                    }
+                const productNameLower = planRecord.name.toLowerCase();
+                if (productNameLower.includes('agency')) {
+                    plan = 'agency';
+                } else if (productNameLower.includes('pro')) {
+                    plan = 'pro';
                 }
 
-                // 3. Update user plan (no more hardcoded credits)
+                // 3. Update user plan
                 await prisma.user.update({
                     where: { id: userId },
                     data: { plan: plan }
