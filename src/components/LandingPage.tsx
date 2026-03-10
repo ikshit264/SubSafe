@@ -329,13 +329,19 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onNavigate, isLoggedIn
 
             {/* Footer */}
             <footer className="bg-white py-12 border-t border-gray-100">
-                <div className="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center text-gray-500 text-sm gap-4 font-medium">
+                <div className="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center text-gray-500 text-sm gap-4 font-medium flex-wrap">
                     <div className="flex items-center gap-2">
                         <div className="w-6 h-6 bg-brand-orange rounded-md flex items-center justify-center text-white font-bold text-xs transform -rotate-6">S</div>
                         <span className="font-bold text-brand-black">{APP_NAME}</span>
                     </div>
-                    <div className="flex gap-6">
+                    <div className="flex gap-6 flex-wrap justify-center my-4 md:my-0">
                         <button onClick={() => onNavigate('blog')} className="hover:text-black transition-colors">Blog</button>
+                        <a href="/use-cases" className="hover:text-black transition-colors">Use Cases</a>
+                        <a href="/vs" className="hover:text-black transition-colors">Comparisons</a>
+                        <a href="/features" className="hover:text-black transition-colors">Features</a>
+                        <a href="/industries" className="hover:text-black transition-colors">Industries</a>
+                        <a href="/solutions" className="hover:text-black transition-colors">Solutions</a>
+                        <span className="text-gray-300">|</span>
                         <a href="#" className="hover:text-black transition-colors">Privacy</a>
                         <a href="#" className="hover:text-black transition-colors">Terms</a>
                     </div>

@@ -3,10 +3,10 @@
 import { BlogPage } from '@/components/BlogPage';
 import { useRouter } from 'next/navigation';
 
-export default function BlogClient() {
+export default function BlogClient({ posts }: { posts: any[] }) {
     const router = useRouter();
 
-    const handleNavigate = (view: string, id?: number) => {
+    const handleNavigate = (view: string, id?: string | number) => {
         if (view === 'blog-post' && id) router.push(`/blog/${id}`);
         else if (view === 'landing') router.push('/');
         else if (view === 'login') router.push('/login');
@@ -15,5 +15,5 @@ export default function BlogClient() {
         else router.push('/');
     };
 
-    return <BlogPage onNavigate={handleNavigate} />;
+    return <BlogPage posts={posts} onNavigate={handleNavigate} />;
 }

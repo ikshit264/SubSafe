@@ -1,15 +1,16 @@
 'use client';
 
 import React from 'react';
-import { BLOG_POSTS, APP_NAME } from '@/constants';
+import { APP_NAME } from '@/constants';
 import { NeoButton } from './ui/NeoButton';
 import { ArrowRight, Calendar, Clock } from 'lucide-react';
 
 interface BlogPageProps {
-   onNavigate: (view: any, id?: number) => void;
+   posts: any[];
+   onNavigate: (view: any, id?: string | number) => void;
 }
 
-export const BlogPage: React.FC<BlogPageProps> = ({ onNavigate }) => {
+export const BlogPage: React.FC<BlogPageProps> = ({ posts, onNavigate }) => {
    return (
       <div className="min-h-screen bg-brand-bg font-sans selection:bg-brand-lime selection:text-black dark:text-gray-800">
          {/* Navbar */}
@@ -38,7 +39,7 @@ export const BlogPage: React.FC<BlogPageProps> = ({ onNavigate }) => {
 
             {/* Blog Grid */}
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-               {BLOG_POSTS.map((post) => (
+               {posts.map((post: any) => (
                   <article
                      key={post.id}
                      className="bg-white rounded-[32px] overflow-hidden border border-gray-100 shadow-soft hover:shadow-soft-lg transition-all hover:-translate-y-2 group cursor-pointer flex flex-col h-full"
@@ -101,15 +102,21 @@ export const BlogPage: React.FC<BlogPageProps> = ({ onNavigate }) => {
 
          {/* Footer */}
          <footer className="bg-white py-12 border-t border-gray-100">
-            <div className="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center text-gray-500 text-sm gap-4">
+            <div className="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center text-gray-500 text-sm gap-4 flex-wrap">
                <div className="flex items-center gap-2 cursor-pointer" onClick={() => onNavigate('landing')}>
                   <div className="w-6 h-6 bg-brand-orange rounded-md flex items-center justify-center text-white font-bold text-xs transform -rotate-6">S</div>
                   <span className="font-bold text-brand-black">{APP_NAME}</span>
                </div>
-               <div className="flex gap-6">
+               <div className="flex gap-6 flex-wrap justify-center my-4 md:my-0">
+                  <button onClick={() => onNavigate('landing')} className="hover:text-black transition-colors">Home</button>
+                  <a href="/use-cases" className="hover:text-black transition-colors">Use Cases</a>
+                  <a href="/vs" className="hover:text-black transition-colors">Comparisons</a>
+                  <a href="/features" className="hover:text-black transition-colors">Features</a>
+                  <a href="/industries" className="hover:text-black transition-colors">Industries</a>
+                  <a href="/solutions" className="hover:text-black transition-colors">Solutions</a>
+                  <span className="text-gray-300">|</span>
                   <a href="#" className="hover:text-black transition-colors">Privacy Policy</a>
                   <a href="#" className="hover:text-black transition-colors">Terms of Service</a>
-                  <button onClick={() => onNavigate('landing')} className="hover:text-black transition-colors">Home</button>
                </div>
                <p>© 2024 {APP_NAME} Inc.</p>
             </div>

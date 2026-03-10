@@ -1,0 +1,78 @@
+[
+    {
+        "slug": "instant-removals",
+        "title": "Why Reddit AutoModerator Instantly Removes Posts",
+        "primary_keyword": "reddit posts removed instantly",
+        "pain_points": [
+            "Writing a 1,000 word post only for it to be deleted in 0.5 seconds",
+            "Not knowing which word triggered the spam filter",
+            "Wasting hours on failed launches"
+        ],
+        "solution_summary": "AutoModerators use hidden YAML regex scripts to instantly delete posts containing marketing buzzwords. SubSafe simulates these scripts so you can remove the triggers before you ever click 'Submit'.",
+        "faq": [
+            {
+                "question": "How do I bypass the Reddit spam filter?",
+                "answer": "By removing promotional trigger words (like 'discount', 'buy now', or 'my startup') and ensuring you meet the subreddit's hidden karma minimums."
+            },
+            {
+                "question": "Does AutoMod tell you why you were removed?",
+                "answer": "Usually, no. It issues a silent 'removed' tag. SubSafe highlights the exact string of text that is mathematically likely to trigger the YAML gates."
+            }
+        ]
+    },
+    {
+        "slug": "shadowbanned-accounts",
+        "title": "Diagnose and Prevent Reddit Account Shadowbans",
+        "primary_keyword": "check reddit shadowban",
+        "pain_points": [
+            "Your posts are stuck at exactly 1 upvote for days",
+            "Nobody replies to your comments",
+            "Your profile link goes to a 'User Not Found' page"
+        ],
+        "solution_summary": "Reddit silently mutes accounts that post links too frequently across multiple subreddits. SubSafe monitors your posting velocity and warns you before you cross the shadowban threshold.",
+        "faq": [
+            {
+                "question": "What is a Reddit shadowban?",
+                "answer": "A silent ban where you can still log in and post, but your content is completely invisible to all other users on the platform."
+            },
+            {
+                "question": "Can I recover a shadowbanned account?",
+                "answer": "Yes, through the official reddit.com/appeals process, but the best strategy is proactive prevention by monitoring your promotional velocity."
+            }
+        ]
+    },
+    {
+        "slug": "ip-bans",
+        "title": "Preventing Reddit IP Bans",
+        "primary_keyword": "avoid reddit IP ban",
+        "pain_points": [
+            "Entire office networks getting blacklisted",
+            "Agencies destroying multiple client campaigns simultaneously",
+            "Losing years of account history in seconds"
+        ],
+        "solution_summary": "Reddit IP bans are devastating and often permanent. SubSafe proactively warns you about velocity limits and account tethering risks before your network gets flagged by the global spam algorithm.",
+        "faq": [
+            {
+                "question": "What triggers a Reddit IP ban?",
+                "answer": "Using the same IP to upvote your own content across multiple accounts, or posting identical promotional links simultaneously from a single network."
+            }
+        ]
+    },
+    {
+        "slug": "low-karma-limits",
+        "title": "Bypassing Low Karma Limits",
+        "primary_keyword": "how to get reddit karma fast",
+        "pain_points": [
+            "Waiting 30 days and grinding 500 karma just to post a single marketing message",
+            "Buying fake accounts that immediately get shadowbanned",
+            "Wasting time commenting manually to build required comment karma"
+        ],
+        "solution_summary": "Karma walls are the most frustrating barrier for new marketers. SubSafe guides you in identifying the exact hidden karma thresholds for your target subreddits so you know precisely when it's safe to engage.",
+        "faq": [
+            {
+                "question": "How much karma do I need to post on Reddit?",
+                "answer": "It varies from 10 to 500+. SubSafe helps you decipher the exact AutoModerator requirements before you waste a launch."
+            }
+        ]
+    }
+]

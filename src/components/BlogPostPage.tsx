@@ -1,17 +1,18 @@
 'use client';
 
 import React, { useEffect } from 'react';
-import { BLOG_POSTS, APP_NAME } from '@/constants';
+import { APP_NAME } from '@/constants';
 import { NeoButton } from './ui/NeoButton';
 import { ArrowLeft, Clock, Share2, Twitter, Linkedin } from 'lucide-react';
 
 interface BlogPostPageProps {
-   id: number;
-   onNavigate: (view: any, id?: number) => void;
+   id: string;
+   posts: any[];
+   onNavigate: (view: any, id?: string | number) => void;
 }
 
-export const BlogPostPage: React.FC<BlogPostPageProps> = ({ id, onNavigate }) => {
-   const post = BLOG_POSTS.find(p => p.id === id);
+export const BlogPostPage: React.FC<BlogPostPageProps> = ({ id, posts, onNavigate }) => {
+   const post = posts.find((p: any) => String(p.id) === String(id));
 
    useEffect(() => {
       window.scrollTo(0, 0);
@@ -28,7 +29,7 @@ export const BlogPostPage: React.FC<BlogPostPageProps> = ({ id, onNavigate }) =>
       );
    }
 
-   const relatedPosts = BLOG_POSTS.filter(p => p.id !== id).slice(0, 2);
+   const relatedPosts = posts.filter((p: any) => String(p.id) !== String(id)).slice(0, 2);
 
    return (
       <div className="min-h-screen bg-brand-bg font-sans selection:bg-brand-lime selection:text-black dark:text-gray-800">
@@ -73,24 +74,102 @@ export const BlogPostPage: React.FC<BlogPostPageProps> = ({ id, onNavigate }) =>
                      </div>
                   </div>
                   <div className="flex gap-3">
-                     <button className="w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center text-gray-500 hover:bg-blue-50 hover:text-blue-500 transition-colors"><Twitter size={14} /></button>
-                     <button className="w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center text-gray-500 hover:bg-blue-50 hover:text-blue-700 transition-colors"><Linkedin size={14} /></button>
-                     <button className="w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center text-gray-500 hover:bg-gray-200 hover:text-black transition-colors"><Share2 size={14} /></button>
+                     <a
+                        href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(post.title)}&url=${encodeURIComponent(`${process.env.NEXT_PUBLIC_SITE_URL || 'https://subsafe.app'}/blog/${post.id}`)}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center text-gray-500 hover:bg-blue-50 hover:text-blue-500 transition-colors"
+                     >
+                        <Twitter size={14} />
+                     </a>
+                     <a
+                        href={`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(`${process.env.NEXT_PUBLIC_SITE_URL || 'https://subsafe.app'}/blog/${post.id}`)}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center text-gray-500 hover:bg-blue-50 hover:text-blue-700 transition-colors"
+                     >
+                        <Linkedin size={14} />
+                     </a>
+                     <button
+                        onClick={() => {
+                           if (navigator.share) {
+                              navigator.share({
+                                 title: post.title,
+                                 url: `${process.env.NEXT_PUBLIC_SITE_URL || 'https://subsafe.app'}/blog/${post.id}`
+                              });
+                           } else {
+                              navigator.clipboard.writeText(`${process.env.NEXT_PUBLIC_SITE_URL || 'https://subsafe.app'}/blog/${post.id}`);
+                              alert('Link copied to clipboard!');
+                           }
+                        }}
+                        className="w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center text-gray-500 hover:bg-gray-200 hover:text-black transition-colors"
+                     >
+                        <Share2 size={14} />
+                     </button>
                   </div>
                </div>
 
                {/* Content Body */}
-               <div
-                  className="prose prose-lg prose-slate max-w-none 
-               prose-headings:font-display prose-headings:font-bold prose-headings:text-brand-black
-               prose-a:text-brand-orange prose-a:no-underline hover:prose-a:underline
-               prose-img:rounded-3xl prose-img:shadow-soft-lg prose-img:border prose-img:border-gray-100
-               prose-p:text-gray-600 prose-p:leading-relaxed
-               prose-li:text-gray-600
-               "
-               >
-                  <img src={post.imageUrl} alt={post.title} className="w-full h-[400px] object-cover mb-10 rounded-[32px]" />
-                  <div dangerouslySetInnerHTML={{ __html: post.content }} />
+               <div className="space-y-16 mt-12">
+                  <img src={post.imageUrl} alt={post.title} className="w-full h-[400px] lg:h-[500px] object-cover mb-12 rounded-[32px] shadow-soft-lg border border-gray-100" />
+
+                  {post.sections?.map((section: any, idx: number) => (
+                     <section key={idx} className="flex flex-col gap-6">
+                        {section.heading && (
+                           <h2 className="text-3xl font-display font-bold text-brand-black mt-8">{section.heading}</h2>
+                        )}
+
+                        {section.quote && (
+                           <blockquote className="border-l-4 border-brand-orange pl-6 py-4 my-6 bg-brand-orange/5 rounded-r-2xl transform transition-all hover:scale-[1.01]">
+                              <p className="text-xl italic text-gray-800 font-medium">"{section.quote.text}"</p>
+                              {section.quote.author && (
+                                 <footer className="mt-3 text-sm text-gray-500 font-bold tracking-wide uppercase">— {section.quote.author}</footer>
+                              )}
+                           </blockquote>
+                        )}
+
+                        {section.paragraphs?.map((p: string, pIdx: number) => (
+                           <p
+                              key={pIdx}
+                              className="text-lg text-gray-600 leading-relaxed"
+                              dangerouslySetInnerHTML={{
+                                 __html: p.replace(/\*\*(.*?)\*\*/g, '<strong class="text-brand-black">$1</strong>').replace(/`(.*?)`/g, '<code class="bg-gray-100 text-brand-orange px-1.5 py-0.5 rounded-md font-mono text-sm border border-gray-200">$1</code>')
+                              }}
+                           />
+                        ))}
+
+                        {section.listItems && (
+                           <ul className="space-y-4 my-8 bg-white p-8 rounded-3xl border border-gray-100 shadow-sm">
+                              {section.listItems.map((item: string, iIdx: number) => (
+                                 <li key={iIdx} className="flex items-start gap-4">
+                                    <div className="mt-2.5 w-2 h-2 rounded-full bg-brand-orange shrink-0 shadow-[0_0_8px_rgba(255,87,34,0.6)]" />
+                                    <span className="text-gray-600 text-lg leading-relaxed" dangerouslySetInnerHTML={{ __html: item.replace(/\*\*(.*?)\*\*/g, '<strong class="text-brand-black">$1</strong>').replace(/`(.*?)`/g, '<code class="bg-gray-100 text-brand-orange px-1.5 py-0.5 rounded-md font-mono text-sm border border-gray-200">$1</code>') }} />
+                                 </li>
+                              ))}
+                           </ul>
+                        )}
+
+                        {section.image && (
+                           <figure className="my-10">
+                              <img src={section.image.url} alt={section.image.alt} className="w-full rounded-[24px] shadow-md border border-gray-200 object-cover max-h-[450px]" />
+                              {section.image.caption && (
+                                 <figcaption className="text-center text-sm text-gray-400 mt-4 font-medium">{section.image.caption}</figcaption>
+                              )}
+                           </figure>
+                        )}
+
+                        {section.callout && (
+                           <div className={`p-6 my-6 rounded-2xl flex items-start gap-4 border ${section.callout.type === 'warning' ? 'bg-red-50 border-red-100 text-red-900' : section.callout.type === 'tip' ? 'bg-brand-lime/20 border-brand-lime/50 text-green-950' : 'bg-blue-50 border-blue-100 text-blue-900'}`}>
+                              <div>
+                                 <div className="text-xs font-bold uppercase mb-1 tracking-wider opacity-70">
+                                    {section.callout.type === 'warning' ? '⚠️ Warning' : section.callout.type === 'tip' ? '💡 Pro Tip' : 'ℹ️ Note'}
+                                 </div>
+                                 <div className="text-base font-medium leading-relaxed">{section.callout.text}</div>
+                              </div>
+                           </div>
+                        )}
+                     </section>
+                  ))}
                </div>
 
                {/* Author Bio / CTA */}
@@ -132,8 +211,15 @@ export const BlogPostPage: React.FC<BlogPostPageProps> = ({ id, onNavigate }) =>
                   <div className="w-6 h-6 bg-brand-orange rounded-md flex items-center justify-center text-white font-bold text-xs transform -rotate-6">S</div>
                   <span className="font-bold text-brand-black">{APP_NAME}</span>
                </div>
-               <div className="flex gap-6">
-                  <button onClick={() => onNavigate('blog')} className="hover:text-black transition-colors text-gray-500">Blog</button>
+               <div className="flex gap-6 flex-wrap justify-center my-4 md:my-0 text-gray-500">
+                  <button onClick={() => onNavigate('landing')} className="hover:text-black transition-colors">Home</button>
+                  <button onClick={() => onNavigate('blog')} className="hover:text-black transition-colors">Blog</button>
+                  <a href="/use-cases" className="hover:text-black transition-colors">Use Cases</a>
+                  <a href="/vs" className="hover:text-black transition-colors">Comparisons</a>
+                  <a href="/features" className="hover:text-black transition-colors">Features</a>
+                  <a href="/industries" className="hover:text-black transition-colors">Industries</a>
+                  <a href="/solutions" className="hover:text-black transition-colors">Solutions</a>
+                  <span className="text-gray-300">|</span>
                   <a href="#" className="hover:text-black transition-colors">Privacy Policy</a>
                   <a href="#" className="hover:text-black transition-colors">Terms of Service</a>
                </div>

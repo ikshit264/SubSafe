@@ -1,0 +1,80 @@
+﻿
+> reddit_post_next@0.1.0 build
+> prisma generate && next build
+
+Environment variables loaded from .env
+Prisma schema loaded from prisma\schema.prisma
+
+Γ£ö Generated Prisma Client (v5.22.0) to .\node_modules\@prisma\client in 64ms
+
+Start by importing your Prisma Client (See: https://pris.ly/d/importing-client)
+
+Tip: Curious about the SQL queries Prisma ORM generates? Optimize helps you enhance your visibility: https://pris.ly/tip-2-optimize
+
+Γû▓ Next.js 16.1.6 (Turbopack)
+- Environments: .env
+
+  Creating an optimized production build ...
+Γ£ô Compiled successfully in 5.4s
+  Running TypeScript ...
+node.exe : Failed to compile.
+At line:1 char:1
++ & "C:\Program 
+Files\nodejs/node.exe" "C:\Program 
+Files\nodejs/node_mo ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSp 
+   ecified: (Failed to compile.:St  
+  ring) [], RemoteException
+    + FullyQualifiedErrorId : Nativ 
+   eCommandError
+ 
+
+./src/app/use-cases/[slug]/page.tsx:
+48:22
+Type error: Property 'category' 
+does not exist on type '{ slug: 
+string; title: string; 
+primary_keyword: string; 
+pain_points: string[]; 
+solution_summary: string; faq: { 
+question: string; answer: string; 
+}[]; }'.
+
+[0m [90m 46 |[39m         
+[33m.[39mfilter(blog [33m=>[39m 
+blog[33m.[39mtitle[33m.[39mtoLow
+erCase()[33m.[39mincludes(useCase
+[33m.[39mtitle[33m.[39mtoLowerCas
+e()) [33m||[39m
+ [90m 47 |[39m             
+(useCase[33m.[39mprimary_keyword 
+[33m&&[39m (blog[33m.[39mmetadat
+a[33m?[39m[33m.[39mkeywords[33m
+?[39m[33m.[39mincludes(useCase[3
+3m.[39mprimary_keyword) 
+[33m||[39m blog[33m.[39mtitle[3
+3m.[39mtoLowerCase()[33m.[39mincl
+udes(useCase[33m.[39mprimary_keywo
+rd[33m.[39mtoLowerCase()))) 
+[33m||[39m
+[31m[1m>[22m[39m[90m 48 |[39m 
+            
+(useCase[33m.[39mcategory 
+[33m&&[39m blog[33m.[39mcategory
+[33m.[39mtoLowerCase() 
+[33m===[39m useCase[33m.[39mcate
+gory[33m.[39mtoLowerCase()) 
+[33m||[39m
+ [90m    |[39m                    
+  [31m[1m^[22m[39m
+ [90m 49 |[39m             blog[3
+3m.[39mslug[33m.[39mincludes(useC
+ase[33m.[39mslug))
+ [90m 50 |[39m         [33m.[39m
+slice([35m0[39m[33m,[39m 
+[35m4[39m)[33m;[39m
+ [90m 51 |[39m[0m
+Next.js build worker exited with 
+code: 1 and signal: null

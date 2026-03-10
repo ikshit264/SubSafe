@@ -1,5 +1,6 @@
 import { Metadata } from 'next';
 import BlogClient from './BlogClient';
+import blogsData from '@/seo-data/blogs.json';
 
 export const metadata: Metadata = {
     title: "Reddit Marketing & Growth Blog — SubSafe",
@@ -8,13 +9,7 @@ export const metadata: Metadata = {
         "Reddit Marketing Guide 2026",
         "Subreddit Growth Strategies",
         "How to Avoid Getting Banned on Reddit",
-        "Reddit Karma Building Tips",
-        "Reddit Community Engagement Best Practices",
-        "Subreddit Success Stories",
-        "Reddit SEO Optimization Guide",
-        "Reddit Content Strategy",
-        "Modern Reddit Marketing Trends",
-        "Advanced Reddit Automation"
+        "Reddit Karma Building Tips"
     ],
 };
 
@@ -50,7 +45,7 @@ export default function Blog() {
                     })
                 }}
             />
-            <BlogClient />
+            <BlogClient posts={blogsData} />
         </>
     );
 }

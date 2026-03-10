@@ -1,5 +1,4 @@
 import { MetadataRoute } from "next";
-import { BLOG_POSTS } from "@/constants";
 
 export default function sitemap(): MetadataRoute.Sitemap {
     const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
@@ -37,12 +36,60 @@ export default function sitemap(): MetadataRoute.Sitemap {
         },
     ];
 
-    const blogPages: MetadataRoute.Sitemap = BLOG_POSTS.map((post) => ({
-        url: `${siteUrl}/blog/${post.id}`,
+    const subsafeData = require('@/seo-data/products/subsafe.json');
+    const industriesData = require('@/seo-data/industries.json');
+    const problemsData = require('@/seo-data/problems.json');
+    const blogsData = require('@/seo-data/blogs.json');
+
+    const useCasesPages: MetadataRoute.Sitemap = subsafeData.use_cases.map((uc: any) => ({
+        url: `${siteUrl}/use-cases/${uc.slug}`,
         lastModified: new Date(),
         changeFrequency: "weekly" as const,
         priority: 0.8,
     }));
 
-    return [...staticPages, ...blogPages];
+    const vsPages: MetadataRoute.Sitemap = subsafeData.competitors.map((c: any) => ({
+        url: `${siteUrl}/vs/${c.slug}`,
+        lastModified: new Date(),
+        changeFrequency: "monthly" as const,
+        priority: 0.7,
+    }));
+
+    const featurePages: MetadataRoute.Sitemap = subsafeData.features.map((f: any) => ({
+        url: `${siteUrl}/features/${f.slug}`,
+        lastModified: new Date(),
+        changeFrequency: "monthly" as const,
+        priority: 0.6,
+    }));
+
+    const industryPages: MetadataRoute.Sitemap = industriesData.map((ind: any) => ({
+        url: `${siteUrl}/industries/${ind.slug}`,
+        lastModified: new Date(),
+        changeFrequency: "weekly" as const,
+        priority: 0.8,
+    }));
+
+    const problemPages: MetadataRoute.Sitemap = problemsData.map((p: any) => ({
+        url: `${siteUrl}/solutions/${p.slug}`,
+        lastModified: new Date(),
+        changeFrequency: "weekly" as const,
+        priority: 0.75,
+    }));
+
+    const blogPages: MetadataRoute.Sitemap = blogsData.map((blog: any) => ({
+        url: `${siteUrl}/blog/${blog.slug}`,
+        lastModified: new Date(blog.date || new Date()),
+        changeFrequency: "monthly" as const,
+        priority: 0.9,
+    }));
+
+    return [
+        ...staticPages,
+        ...useCasesPages,
+        ...vsPages,
+        ...featurePages,
+        ...industryPages,
+        ...problemPages,
+        ...blogPages
+    ];
 }

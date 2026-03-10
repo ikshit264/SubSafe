@@ -1,0 +1,74 @@
+[
+    {
+        "slug": "saas-startups",
+        "title": "SubSafe for SaaS Startups",
+        "primary_keyword": "reddit marketing for SaaS",
+        "pain_points": [
+            "Launching products to crickets",
+            "Getting banned from r/startups for self-promotion",
+            "High cost of traditional B2B acquisition"
+        ],
+        "solution_summary": "SaaS founders use SubSafe to perfectly calibrate their launch messaging, ensuring they bypass algorithmic spam filters and acquire their first 100 beta testers directly from Reddit without getting banned.",
+        "faq": [
+            {
+                "question": "Why do SaaS launches fail on Reddit?",
+                "answer": "Founders often use marketing jargon like 'game changer' or 'sign up here'. AutoModerators instantly delete these posts. SubSafe catches this before you post."
+            },
+            {
+                "question": "Can I use SubSafe to validate my MVP?",
+                "answer": "Yes. SubSafe allows you to craft the perfect 'Roast my landing page' post that encourages engagement rather than triggering self-promotion filters."
+            }
+        ]
+    },
+    {
+        "slug": "marketing-agencies",
+        "title": "SubSafe for Marketing Agencies",
+        "primary_keyword": "reddit tools for marketing agencies",
+        "pain_points": [
+            "Risking client brand reputation with accidental bans",
+            "Manually checking rules across 50+ niche subreddits",
+            "Inability to scale Reddit community growth safely"
+        ],
+        "solution_summary": "Marketing agencies utilize SubSafe as a pre-flight checklist. Simulate AutoModerator filters across hundreds of subreddits to guarantee client posts land safely and generate ROI.",
+        "faq": [
+            {
+                "question": "Does SubSafe work for B2B Enterprise clients?",
+                "answer": "Absolutely. Enterprise tech subreddits have the strictest moderation on Reddit. SubSafe ensures your B2B technical content isn't mistaken for corporate spam."
+            }
+        ]
+    },
+    {
+        "slug": "enterprise-b2b",
+        "title": "SubSafe for Enterprise B2B",
+        "primary_keyword": "B2B reddit marketing",
+        "pain_points": [
+            "Technical prospects rejecting marketing jargon",
+            "Difficulty establishing domain authority safely",
+            "High customer acquisition cost on traditional channels"
+        ],
+        "solution_summary": "Enterprise B2B companies use SubSafe to securely publish highly technical, high-value guides directly to decision-makers without triggering the aggressive spam filters found in professional subreddits.",
+        "faq": [
+            {
+                "question": "Can I generate enterprise leads on Reddit?",
+                "answer": "Yes, by bypassing standard marketing speak and delivering pre-verified technical value to niche professional communities like r/macsysadmin or r/CyberSecurity."
+            }
+        ]
+    },
+    {
+        "slug": "content-creators",
+        "title": "SubSafe for Content Creators",
+        "primary_keyword": "promote youtube videos on reddit",
+        "pain_points": [
+            "Link dumping on Reddit usually results in immediate bans",
+            "Low YouTube conversion rates from generic spam",
+            "Not understanding subreddit-specific self-promotion ratios"
+        ],
+        "solution_summary": "Content creators use SubSafe to strategically drop high-value video links into hyper-niche communities without violating the sacred 10:1 Reddit self-promotion rule.",
+        "faq": [
+            {
+                "question": "Can I post YouTube links on Reddit?",
+                "answer": "Yes, but you must natively format your description and strictly adhere to self-promotion limits. SubSafe helps you map these specific subreddit restrictions."
+            }
+        ]
+    }
+]

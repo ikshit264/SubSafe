@@ -1,0 +1,59 @@
+﻿
+> reddit_post_next@0.1.0 build
+> prisma generate && next build
+
+Environment variables loaded from .env
+Prisma schema loaded from prisma\schema.prisma
+
+Γ£ö Generated Prisma Client (v5.22.0) to .\node_modules\@prisma\client in 90ms
+
+Start by importing your Prisma Client (See: https://pris.ly/d/importing-client)
+
+Tip: Easily identify and fix slow SQL queries in your app. Optimize helps you enhance your visibility: https://pris.ly/--optimize
+
+Γû▓ Next.js 16.1.6 (Turbopack)
+- Environments: .env
+
+  Creating an optimized production build ...
+Γ£ô Compiled successfully in 5.2s
+  Running TypeScript ...
+node.exe : Failed to compile.
+At line:1 char:1
++ & "C:\Program Files\nodejs/node.exe" 
+"C:\Program Files\nodejs/node_mo ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSp    
+ecified: (Failed to compile.:St    ring) 
+[], RemoteException
+    + FullyQualifiedErrorId : Nativ    
+eCommandError
+ 
+
+./src/app/solutions/[problem]/page.tsx:28:
+27
+Type error: Property 'description' does 
+not exist on type '{ slug: string; title: 
+string; primary_keyword: string; 
+pain_points: string[]; solution_summary: 
+string; faq: { question: string; answer: 
+string; }[]; }'.
+
+[0m [90m 26 |[39m     [36mreturn[39m 
+{
+ [90m 27 |[39m         title[33m:[39m 
+[32m`${prob.title} | SubSafe 
+Solutions`[39m[33m,[39m
+[31m[1m>[22m[39m[90m 28 |[39m       
+  description[33m:[39m 
+prob[33m.[39mdescription[33m,[39m
+ [90m    |[39m                          
+ [31m[1m^[22m[39m
+ [90m 29 |[39m         
+alternates[33m:[39m {
+ [90m 30 |[39m             
+canonical[33m:[39m [32m`/solutions/${pr
+oblem}`[39m[33m,[39m
+ [90m 31 |[39m         }[33m,[39m[0m
+Next.js build worker exited with code: 1 
+and signal: null

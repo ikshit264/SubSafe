@@ -1,0 +1,68 @@
+﻿
+> reddit_post_next@0.1.0 build
+> prisma generate && next build
+
+Environment variables loaded from .env
+Prisma schema loaded from prisma\schema.prisma
+
+Γ£ö Generated Prisma Client (v5.22.0) to .\node_modules\@prisma\client in 87ms
+
+Start by importing your Prisma Client (See: https://pris.ly/d/importing-client)
+
+Help us improve the Prisma ORM for everyone. Share your feedback in a short 2-min survey: https://pris.ly/orm/survey/release-5-22
+
+Γû▓ Next.js 16.1.6 (Turbopack)
+- Environments: .env
+
+  Creating an optimized production build ...
+Γ£ô Compiled successfully in 5.3s
+  Running TypeScript ...
+node.exe : Failed to compile.
+At line:1 char:1
++ & "C:\Program Files\nodejs/node.exe" 
+"C:\Program Files\nodejs/node_mo ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecifie 
+   d: (Failed to compile.:String) [], Re  
+  moteException
+    + FullyQualifiedErrorId : NativeComma 
+   ndError
+ 
+
+./src/app/industries/[industry]/page.tsx:4
+8:18
+Type error: Property 'name' does not 
+exist on type '{ slug: string; title: 
+string; primary_keyword: string; 
+pain_points: string[]; solution_summary: 
+string; faq: { question: string; answer: 
+string; }[]; }'.
+
+[0m [90m 46 |[39m     [36mconst[39m 
+relatedBlogs [33m=[39m blogsData
+ [90m 47 |[39m         
+[33m.[39mfilter(blog [33m=>[39m blog[
+33m.[39mtitle[33m.[39mtoLowerCase()[33
+m.[39mincludes(ind[33m.[39mtitle[33m.
+[39mtoLowerCase()) [33m||[39m blog[33m.
+[39mcategory[33m.[39mtoLowerCase()[33m
+.[39mincludes(ind[33m.[39mtitle[33m.[
+39mtoLowerCase()) [33m||[39m
+[31m[1m>[22m[39m[90m 48 |[39m       
+      (ind[33m.[39mname [33m&&[39m blo
+g[33m.[39mtitle[33m.[39mtoLowerCase()
+[33m.[39mincludes(ind[33m.[39mname[33m
+.[39mtoLowerCase())) [33m||[39m
+ [90m    |[39m                  
+[31m[1m^[22m[39m
+ [90m 49 |[39m             
+(ind[33m.[39mslug [33m&&[39m blog[33m
+.[39mslug[33m.[39mincludes(ind[33m.[3
+9mslug)))
+ [90m 50 |[39m         
+[33m.[39mslice([35m0[39m[33m,[39m 
+[35m4[39m)[33m;[39m
+ [90m 51 |[39m[0m
+Next.js build worker exited with code: 1 
+and signal: null

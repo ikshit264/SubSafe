@@ -1,0 +1,167 @@
+{
+    "product_name": "SubSafe",
+    "primary_keywords": [
+        "Reddit Shadowban Checker",
+        "Reddit Compliance Tool"
+    ],
+    "use_cases": [
+        {
+            "slug": "reddit-marketing",
+            "title": "SubSafe for Reddit Marketing",
+            "primary_keyword": "Reddit marketing tool",
+            "pain_points": [
+                "Getting banned instantly upon posting",
+                "Low reach on promotional posts",
+                "Unable to track subreddit specific rules"
+            ],
+            "solution_summary": "SubSafe analyzes your posts before they go live, ensuring compliance with subreddit rules and avoiding shadowbans so your marketing efforts actually reach the audience.",
+            "faq": [
+                {
+                    "question": "How to do Reddit marketing safely?",
+                    "answer": "By using a tool like SubSafe to predictably check your posts against automod filters and subreddit rules before posting."
+                },
+                {
+                    "question": "Will SubSafe guarantee I never get banned?",
+                    "answer": "SubSafe significantly reduces the risk by flagging known triggers, but Reddit moderators always have the final say."
+                }
+            ]
+        },
+        {
+            "slug": "community-management",
+            "title": "SubSafe for Community Managers",
+            "primary_keyword": "Reddit community management tool",
+            "pain_points": [
+                "Accidentally triggering automod in own subreddits",
+                "Managing multiple brand accounts safely"
+            ],
+            "solution_summary": "SubSafe helps community managers test post compliance across different subreddits without risking their primary brand accounts.",
+            "faq": []
+        },
+        {
+            "slug": "agency-client-management",
+            "title": "Reddit Marketing for Agencies",
+            "primary_keyword": "reddit tools for marketing agencies",
+            "pain_points": [
+                "Managing multiple brand accounts safely without IP bans",
+                "Reporting Reddit ROI to clients",
+                "Navigating unwritten subreddit rules efficiently"
+            ],
+            "solution_summary": "SubSafe empowers marketing agencies to manage enterprise Reddit campaigns safely, simulating AutoModerator and preventing costly shadowbans across client portfolios.",
+            "faq": [
+                {
+                    "question": "Can I manage multiple client accounts?",
+                    "answer": "Yes, SubSafe helps you simulate compliance rules before exposing client domain names or IPs to potential shadowbans."
+                }
+            ]
+        },
+        {
+            "slug": "indie-hackers",
+            "title": "Reddit for Indie Hackers",
+            "primary_keyword": "reddit marketing for SaaS",
+            "pain_points": [
+                "Launching early MVPs into hostile subreddits",
+                "Appearing too corporate when asking for feedback",
+                "Wasting golden launch opportunities through accidental bans"
+            ],
+            "solution_summary": "SubSafe empowers indie founders to validate their ideas and acquire early adopters safely without triggering community backlash or algorithmic filters.",
+            "faq": [
+                {
+                    "question": "How do indie hackers use Reddit safely?",
+                    "answer": "By adopting a 'building in public' narrative and pre-screening promotional links via SubSafe's shadowban simulator."
+                }
+            ]
+        }
+    ],
+    "competitors": [
+        {
+            "slug": "manual-checking",
+            "title": "SubSafe vs Manual Rule Checking",
+            "primary_keyword": "automate reddit rule checking",
+            "pain_points": [
+                "Reading long sidebars is tedious",
+                "Missing unwritten rules"
+            ],
+            "solution_summary": "Instead of manually checking each subreddit's rules, SubSafe automates the process with AI.",
+            "faq": []
+        },
+        {
+            "slug": "manual-mods-vs-subsafe",
+            "title": "SubSafe vs Manual Moderation",
+            "primary_keyword": "automate reddit rule checking",
+            "pain_points": [
+                "Agencies wasting hundreds of hours on manual compliance",
+                "High error rate causing costly client shadowbans",
+                "Inability to scale Reddit campaigns reliably"
+            ],
+            "solution_summary": "Manual moderation is slow and error-prone. SubSafe replaces human guesswork with automated, real-time simulated enforcement of AutoModerator algorithms, scaling your agency effortlessly.",
+            "faq": [
+                {
+                    "question": "Can SubSafe replace our community managers?",
+                    "answer": "No, it empowers them by removing the tedious compliance checks so they can focus on actual community engagement."
+                }
+            ]
+        },
+        {
+            "slug": "stealth-marketing-vs-spam",
+            "title": "Stealth Marketing vs Standard Spam",
+            "primary_keyword": "organic reddit growth",
+            "pain_points": [
+                "The line between genuine promotion and aggressive spam is invisible",
+                "Traditional ads are ignored, but organic posts are often deleted",
+                "Brands look inauthentic when forcing product drops"
+            ],
+            "solution_summary": "Spam gets deleted. Stealth marketing provides massive value first. SubSafe helps you perfectly calibrate that balance so your brand looks completely organic to cynical users.",
+            "faq": [
+                {
+                    "question": "What is stealth marketing on Reddit?",
+                    "answer": "Providing highly contextual, 90% non-promotional value, and seamlessly integrating your product as a natural conclusion."
+                }
+            ]
+        }
+    ],
+    "features": [
+        {
+            "slug": "shadowban-checker",
+            "title": "Reddit Shadowban Checker",
+            "primary_keyword": "check reddit shadowban",
+            "pain_points": [
+                "Posts getting zero views",
+                "Ghosted accounts"
+            ],
+            "solution_summary": "SubSafe instantly checks if your account or post pattern is likely to trigger a shadowban algorithm.",
+            "faq": []
+        },
+        {
+            "slug": "automod-simulator",
+            "title": "Automod Filter Simulator",
+            "primary_keyword": "reddit automod simulator",
+            "pain_points": [
+                "Posts removed immediately by AutoModerator",
+                "Unclear why a post was removed"
+            ],
+            "solution_summary": "Simulate Reddit's AutoModerator filters before you post, so you can adjust your content to bypass common keyword and karma restrictions.",
+            "faq": []
+        },
+        {
+            "slug": "shadowban-detector",
+            "title": "Real-time Shadowban Detection",
+            "primary_keyword": "check reddit shadowban",
+            "pain_points": [
+                "Posting for weeks without realizing nobody can see your content",
+                "Losing hundreds of dollars in labor on invisble guides",
+                "Blindly scaling operations on compromised accounts"
+            ],
+            "solution_summary": "SubSafe's real-time shadowban detection acts as a vital heartbeat monitor for your agency's account portfolio, alerting you the second an account goes dark.",
+            "faq": [
+                {
+                    "question": "How quickly can SubSafe detect a shadowban?",
+                    "answer": "Our monitoring suite instantly flags velocity drops to alert you within hours, rather than weeks."
+                }
+            ]
+        }
+    ],
+    "internal_link_targets": [
+        "/blog",
+        "/payments"
+    ]
+}
