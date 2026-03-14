@@ -57,7 +57,7 @@ export default function UpvoteWidget() {
                     {"question":"Can SubSafe post directly to Reddit?","answer":"Currently, SubSafe provides analysis and recommendations. Direct posting via Reddit API integration is planned for future releases."}
                 ]'
                 data-position="right" />
-            <Script src="http://upvote.entrext.com/widget.js" strategy="afterInteractive" />
+            <Script src="https://upvote.entrext.com/widget.js" strategy="afterInteractive" />
         </div>
     );
 }
