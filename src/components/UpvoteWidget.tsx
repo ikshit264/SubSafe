@@ -47,6 +47,12 @@ export default function UpvoteWidget() {
                 data-user-id={userData?.id || ''}
                 data-email={userData?.email || ''}
                 data-logo-url="/favicon.png"
+                data-primary-color="#FF5A36"
+                data-secondary-color="#D4F933"
+                data-bg-color="#F9F9F7"
+                data-text-color="#1A1A1A"
+                data-launcher-color="#FF5A36"
+                data-launcher-active-color="#D4F933"
                 data-product-overview="SubSafe is an AI-powered Reddit compliance tool that helps marketers, startup founders, and community managers validate and optimize their Reddit posts before publishing. It analyzes content against subreddit-specific rules, shadowban triggers, and automated moderation filters to maximize post success."
                 data-about-text="SubSafe acts as a pre-flight check for Reddit posts, using Google Gemini AI to provide compliance scoring, violation flagging, and actionable rewrite suggestions. It helps users avoid account bans and post removals by coaching them on Reddit etiquette before they risk their account health."
                 data-faqs='[
