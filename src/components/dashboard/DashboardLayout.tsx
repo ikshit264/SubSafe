@@ -10,7 +10,7 @@ import {
     CreditCard,
 } from 'lucide-react';
 import { CreditProvider, useCreditContext } from '@/lib/CreditContext';
-import { syncUpvoteLogout } from '@/lib/upvote-sync';
+import { syncUpvoteLogout } from '@/lib/monkfeed-sync';
 
 function DashboardInner({ children }: { children: React.ReactNode }) {
     const router = useRouter();

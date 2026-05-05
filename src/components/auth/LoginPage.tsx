@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import { NeoButton } from '../ui/NeoButton';
 import { APP_NAME } from '@/constants';
 import { ArrowLeft } from 'lucide-react';
-import { syncUpvoteLogin } from '@/lib/upvote-sync';
+import { syncUpvoteLogin } from '@/lib/monkfeed-sync';
 
 interface LoginPageProps {
     onLogin: () => void;

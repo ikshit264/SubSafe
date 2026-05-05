@@ -46,14 +46,14 @@
                     "Before you panic, verify if you are actually shadowbanned. Look for these undeniable clues:"
                 ],
                 "listItems": [
-                    "**Total Upvote Stagnation:** Even bad posts get immediate downvotes. If every post or comment rests exactly at \"1\" (your default upvote) for 24+ hours, something is vastly wrong.",
+                    "**Total Upvote Stagnation:** Even bad posts get immediate downvotes. If every post or comment rests exactly at \"1\" (your default monkfeed) for 24+ hours, something is vastly wrong.",
                     "**The Incognito Check (The Only 100% Guaranteed Method):** Open an Incognito/Private browser window. Do not log in. Navigate directly to `reddit.com/user/your-exact-username`. If Reddit says \"This page doesn't exist\" or \"User not found\", you are definitively shadowbanned.",
                     "**The r/ShadowBan Automod:** Make a text post in the `r/ShadowBan` community. Their custom bot will reply instantly, reading your account status from the API.",
                     "**Ghost Comments:** You leave a comment on a popular thread. You log out and view the thread. Your comment vanishes entirely from the page layout."
                 ],
                 "callout": {
                     "type": "warning",
-                    "text": "Never attempt to use a secondary account to upvote your shadowbanned account. This triggers Reddit's vote manipulation filter and will result in an IP-level ban."
+                    "text": "Never attempt to use a secondary account to monkfeed your shadowbanned account. This triggers Reddit's vote manipulation filter and will result in an IP-level ban."
                 }
             },
             {
@@ -196,7 +196,7 @@
                 "listItems": [
                     "**The \"Rising\" Strategy (The Most Effective):** The Reddit frontpage algorithms heavily favor early engagement. Go to massive defaults like r/AskReddit, r/technology, or r/movies. Sort the feed by _\"Rising\"_—not \"Hot\" or \"New\". Posts in \"Rising\" are currently accumulating momentum. Leave thoughtful, genuinely interesting, multi-paragraph comments. Being the top comment on a post that hits \"Hot\" can net you 2,000 karma overnight.",
                     "**The Support Engineer Tactic:** Find the dedicated subreddits for massive frameworks or tools (r/reactjs, r/salesforce, r/aws, r/excel). Users constantly post desperate cries for help. If you provide a detailed, accurate, step-by-step solution, you will consistently receive 10-50 high-quality karma from grateful users.",
-                    "**The Niche Storyteller:** Everyone has an interesting, non-business hobby. r/BeginnerWoodWorking, r/mechanicalkeyboards, or r/Coffee. Post a picture of your setup, explain what went wrong and how you fixed it. Hobby communities upvote passion and heavily reward effort."
+                    "**The Niche Storyteller:** Everyone has an interesting, non-business hobby. r/BeginnerWoodWorking, r/mechanicalkeyboards, or r/Coffee. Post a picture of your setup, explain what went wrong and how you fixed it. Hobby communities monkfeed passion and heavily reward effort."
                 ]
             },
             {
@@ -582,7 +582,7 @@
             {
                 "heading": "The Fundamental Audience Difference",
                 "paragraphs": [
-                    "Product Hunt is a community of **makers looking at products**. People go there specifically to see what's new, upvote cool UI, and network. It is inherently a supportive, celebratory environment.",
+                    "Product Hunt is a community of **makers looking at products**. People go there specifically to see what's new, monkfeed cool UI, and network. It is inherently a supportive, celebratory environment.",
                     "Reddit is a community of **hubs looking for solutions**. People go there to solve specific problems in their hyper-niche domains. It is inherently a skeptical, deeply discerning environment."
                 ],
                 "quote": {

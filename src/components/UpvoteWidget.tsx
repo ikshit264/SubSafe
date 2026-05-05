@@ -30,19 +30,19 @@ export default function UpvoteWidget() {
             if ((window as any).__upvote_cleanup) (window as any).__upvote_cleanup();
         };
 
-        window.addEventListener('upvote:login', handleLogin);
-        window.addEventListener('upvote:logout', handleLogout);
+        window.addEventListener('monkfeed:login', handleLogin);
+        window.addEventListener('monkfeed:logout', handleLogout);
         window.addEventListener('focus', fetchSession);
         return () => {
-            window.removeEventListener('upvote:login', handleLogin);
-            window.removeEventListener('upvote:logout', handleLogout);
+            window.removeEventListener('monkfeed:login', handleLogin);
+            window.removeEventListener('monkfeed:logout', handleLogout);
             window.removeEventListener('focus', fetchSession);
         };
     }, [fetchSession]);
 
     return (
         <div key={remountKey}>
-            <div className="upvote-widget"
+            <div className="monkfeed-widget"
                 data-application-id="69a41f4f3a9a405a41b02afe"
                 data-user-id={userData?.id || ''}
                 data-email={userData?.email || ''}
@@ -63,7 +63,7 @@ export default function UpvoteWidget() {
                     {"question":"Can SubSafe post directly to Reddit?","answer":"Currently, SubSafe provides analysis and recommendations. Direct posting via Reddit API integration is planned for future releases."}
                 ]'
                 data-position="right" />
-            <Script src="https://upvote.entrext.com/widget.js" strategy="afterInteractive" />
+            <Script src="https://monkfeed.entrext.com/widget.js" strategy="afterInteractive" />
         </div>
     );
 }

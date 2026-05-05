@@ -25,7 +25,7 @@
         "title": "Diagnose and Prevent Reddit Account Shadowbans",
         "primary_keyword": "check reddit shadowban",
         "pain_points": [
-            "Your posts are stuck at exactly 1 upvote for days",
+            "Your posts are stuck at exactly 1 monkfeed for days",
             "Nobody replies to your comments",
             "Your profile link goes to a 'User Not Found' page"
         ],
@@ -54,7 +54,7 @@
         "faq": [
             {
                 "question": "What triggers a Reddit IP ban?",
-                "answer": "Using the same IP to upvote your own content across multiple accounts, or posting identical promotional links simultaneously from a single network."
+                "answer": "Using the same IP to monkfeed your own content across multiple accounts, or posting identical promotional links simultaneously from a single network."
             }
         ]
     },
