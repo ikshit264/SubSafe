@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import { NeoButton } from '../ui/NeoButton';
 import { ArrowLeft } from 'lucide-react';
-import { syncUpvoteLogin } from '@/lib/monkfeed-sync';
+import { syncUpvoteLogin } from '@/lib/upvote-sync';
 
 interface SignupPageProps {
     onLogin: () => void;
