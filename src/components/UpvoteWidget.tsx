@@ -1,71 +1,85 @@
 'use client';
-import { useEffect, useState, useCallback } from 'react';
+import { useCallback, useEffect } from 'react';
 import Script from 'next/script';
 
-export default function UpvoteWidget() {
-    const [userData, setUserData] = useState<any>(null);
-    const [remountKey, setRemountKey] = useState(0);
+/**
+ * Monkfeed feedback widget (feedback board, roadmap, what's new, support,
+ * AI help). Loads the Monkfeed bootstrap script for the "Subsafe" project and
+ * identifies the logged-in SubSafe user through a server-signed token
+ * (/api/monkfeed/token) so votes, comments and "shipped" emails are tied to
+ * the real user.
+ *
+ * Configuration (environment):
+ *   NEXT_PUBLIC_MONKFEED_URL        Base URL of the deployed Monkfeed app (defaults to https://monkfeed-p2.vercel.app)
+ *   NEXT_PUBLIC_MONKFEED_TENANT_ID  Monkfeed project id (defaults to the Subsafe project)
+ *   MONKFEED_SIGNING_SECRET         (server only) widget signing secret from Monkfeed Settings
+ * Colours, logo, fonts, blog posts and quick links are managed in the Monkfeed
+ * dashboard, not here.
+ */
+const MONKFEED_URL = (process.env.NEXT_PUBLIC_MONKFEED_URL || 'https://monkfeed-p2.vercel.app').replace(/\/+$/, '');
+const TENANT_ID = process.env.NEXT_PUBLIC_MONKFEED_TENANT_ID || '6ee89eba-449a-4014-9a9e-16200d544b7c';
 
-    const fetchSession = useCallback(async () => {
+type WidgetCall = { method: string; args: unknown[] };
+type WidgetFn = ((method: string, ...args: unknown[]) => void) & { q?: WidgetCall[] };
+
+/** The bootstrap drains calls queued before it loads, so identify() is safe to call at any time. */
+function callWidget(method: 'identify' | 'reset', ...args: unknown[]) {
+    const w = window as unknown as { FeedbackWidget?: WidgetFn };
+    if (!w.FeedbackWidget) {
+        const stub = ((m: string, ...a: unknown[]) => {
+            (stub.q = stub.q || []).push({ method: m, args: a });
+        }) as WidgetFn;
+        w.FeedbackWidget = stub;
+    }
+    w.FeedbackWidget(method, ...args);
+}
+
+export default function UpvoteWidget() {
+    const identify = useCallback(async () => {
         try {
-            const res = await fetch(`/api/auth/me?t=${Date.now()}`);
+            const res = await fetch(`/api/monkfeed/token?t=${Date.now()}`, { cache: 'no-store' });
             if (res.ok) {
-                const data = await res.json();
-                setUserData(data?.email ? data : null);
-            } else {
-                setUserData(null);
+                const data = (await res.json()) as { token?: string };
+                if (data.token) {
+                    callWidget('identify', data.token);
+                    return;
+                }
             }
-        } catch (e) {
-            console.error('Failed to fetch session for UpvoteWidget', e);
-            setUserData(null);
+            if (res.status === 401) callWidget('reset');
+            // 503 = signing secret not configured yet: the widget keeps working anonymously.
+        } catch (error) {
+            console.warn('[monkfeed] could not identify the current user', error);
         }
     }, []);
 
     useEffect(() => {
-        fetchSession();
-        const handleLogin = (e: any) => { setUserData(e.detail); setRemountKey(k => k + 1); };
-        const handleLogout = () => {
-            setUserData(null);
-            setRemountKey(k => k + 1);
-            if ((window as any).__upvote_cleanup) (window as any).__upvote_cleanup();
-        };
-
+        if (!MONKFEED_URL) {
+            console.warn('[monkfeed] NEXT_PUBLIC_MONKFEED_URL is not set; the feedback widget is disabled.');
+            return;
+        }
+        void identify();
+        const handleLogin = () => void identify();
+        const handleLogout = () => callWidget('reset');
         window.addEventListener('monkfeed:login', handleLogin);
         window.addEventListener('monkfeed:logout', handleLogout);
-        window.addEventListener('focus', fetchSession);
         return () => {
             window.removeEventListener('monkfeed:login', handleLogin);
             window.removeEventListener('monkfeed:logout', handleLogout);
-            window.removeEventListener('focus', fetchSession);
         };
-    }, [fetchSession]);
+    }, [identify]);
+
+    if (!MONKFEED_URL) return null;
 
     return (
-        <div key={remountKey}>
-            <div className="monkfeed-widget"
-                data-application-id="69a41f4f3a9a405a41b02afe"
-                data-user-id={userData?.id || ''}
-                data-email={userData?.email || ''}
-                data-widget-name="Subsafe"
-                data-catchphrase="This is your next"
-                data-logo-url="/favicon.png"
-                data-primary-color="#FF5A36"
-                data-secondary-color="#1A1A1A"
-                data-bg-color="#F9F9F7"
-                data-text-color="#000000"
-                data-launcher-color="#FF5A36"
-                data-launcher-active-color="#1A1A1A"
-                data-product-overview="SubSafe is an AI-powered Reddit compliance tool that helps marketers, startup founders, and community managers validate and optimize their Reddit posts before publishing. It analyzes content against subreddit-specific rules, shadowban triggers, and automated moderation filters to maximize post success."
-                data-about-text="SubSafe acts as a pre-flight check for Reddit posts, using Google Gemini AI to provide compliance scoring, violation flagging, and actionable rewrite suggestions. It helps users avoid account bans and post removals by coaching them on Reddit etiquette before they risk their account health."
-                data-faqs='[
-                    {"question":"What does SubSafe do?","answer":"SubSafe analyzes your Reddit posts before you publish them, checking against subreddit rules and automod filters to give you a compliance score and suggestions for improvement."},
-                    {"question":"Who is SubSafe for?","answer":"SubSafe is designed for indie hackers, startup founders, digital marketers, and community managers who want to leverage Reddit for organic growth without risking bans or shadowbans."},
-                    {"question":"How does the AI analysis work?","answer":"SubSafe uses Google Gemini AI to analyze your post title and body against known Reddit meta-rules and subreddit-specific guidelines, then returns a compliance score and actionable feedback."},
-                    {"question":"Is there a free tier?","answer":"Yes! SubSafe offers a free tier with 3 analyses per day. Paid tiers like Creator Plus and Agency provide unlimited access and additional features."},
-                    {"question":"Can SubSafe post directly to Reddit?","answer":"Currently, SubSafe provides analysis and recommendations. Direct posting via Reddit API integration is planned for future releases."}
-                ]'
-                data-position="right" />
-            <Script src="https://upvotetest.netlify.app/widget.js" strategy="afterInteractive" />
-        </div>
+        <>
+            <link rel="stylesheet" href={`${MONKFEED_URL}/widget.css`} precedence="default" />
+            <div id="feedback-widget-root" />
+            <Script
+                id="monkfeed-widget"
+                src={`${MONKFEED_URL}/feedback-widget.js`}
+                data-tenant-id={TENANT_ID}
+                strategy="afterInteractive"
+            />
+        </>
     );
 }
