@@ -5,9 +5,9 @@ import Script from 'next/script';
 /**
  * Monkfeed feedback widget (feedback board, roadmap, what's new, support,
  * AI help). Loads the Monkfeed bootstrap script for the "Subsafe" project and
- * identifies the logged-in SubSafe user through a server-signed token
- * (/api/monkfeed/token) so votes, comments and "shipped" emails are tied to
- * the real user.
+ * identifies the logged-in SubSafe user (Monkfeed('boot' | 'shutdown') with the
+ * server-signed token from /api/monkfeed/token) so votes, comments and
+ * "shipped" emails are tied to the real user.
  *
  * Configuration (environment):
  *   NEXT_PUBLIC_MONKFEED_URL        Base URL of the deployed Monkfeed app (defaults to https://monkfeed-p2.vercel.app)
@@ -19,19 +19,28 @@ import Script from 'next/script';
 const MONKFEED_URL = (process.env.NEXT_PUBLIC_MONKFEED_URL || 'https://monkfeed-p2.vercel.app').replace(/\/+$/, '');
 const TENANT_ID = process.env.NEXT_PUBLIC_MONKFEED_TENANT_ID || '6ee89eba-449a-4014-9a9e-16200d544b7c';
 
-type WidgetCall = { method: string; args: unknown[] };
-type WidgetFn = ((method: string, ...args: unknown[]) => void) & { q?: WidgetCall[] };
+type MonkfeedSettings = {
+    tenant_id?: string;
+    user_id?: string;
+    email?: string;
+    name?: string;
+    created_at?: string;
+    user_jwt?: string;
+};
+type MonkfeedCall = { method: string; args: unknown[] };
+type MonkfeedFn = ((command: string, ...args: unknown[]) => void) & { q?: MonkfeedCall[] };
 
-/** The bootstrap drains calls queued before it loads, so identify() is safe to call at any time. */
-function callWidget(method: 'identify' | 'reset', ...args: unknown[]) {
-    const w = window as unknown as { FeedbackWidget?: WidgetFn };
-    if (!w.FeedbackWidget) {
-        const stub = ((m: string, ...a: unknown[]) => {
-            (stub.q = stub.q || []).push({ method: m, args: a });
-        }) as WidgetFn;
-        w.FeedbackWidget = stub;
+/** The bootstrap drains calls queued before it loads, so boot/update/shutdown are safe to call at any time. */
+function callMonkfeed(command: 'boot' | 'update' | 'shutdown', settings?: MonkfeedSettings) {
+    const w = window as unknown as { Monkfeed?: MonkfeedFn };
+    if (!w.Monkfeed) {
+        const stub = ((c: string, ...a: unknown[]) => {
+            (stub.q = stub.q || []).push({ method: c, args: a });
+        }) as MonkfeedFn;
+        w.Monkfeed = stub;
     }
-    w.FeedbackWidget(method, ...args);
+    if (settings) w.Monkfeed(command, settings);
+    else w.Monkfeed(command);
 }
 
 export default function UpvoteWidget() {
@@ -39,13 +48,24 @@ export default function UpvoteWidget() {
         try {
             const res = await fetch(`/api/monkfeed/token?t=${Date.now()}`, { cache: 'no-store' });
             if (res.ok) {
-                const data = (await res.json()) as { token?: string };
-                if (data.token) {
-                    callWidget('identify', data.token);
+                const data = (await res.json()) as {
+                    token?: string;
+                    user?: { id: string; email: string; name?: string; createdAt?: string };
+                };
+                if (data.token && data.user) {
+                    // Signed token => the identity is verified; the other fields are Monkfeed's display/profile data.
+                    callMonkfeed('boot', {
+                        tenant_id: TENANT_ID,
+                        user_id: data.user.id,
+                        email: data.user.email,
+                        ...(data.user.name ? { name: data.user.name } : {}),
+                        ...(data.user.createdAt ? { created_at: data.user.createdAt } : {}),
+                        user_jwt: data.token,
+                    });
                     return;
                 }
             }
-            if (res.status === 401) callWidget('reset');
+            if (res.status === 401) callMonkfeed('shutdown');
             // 503 = signing secret not configured yet: the widget keeps working anonymously.
         } catch (error) {
             console.warn('[monkfeed] could not identify the current user', error);
@@ -59,7 +79,7 @@ export default function UpvoteWidget() {
         }
         void identify();
         const handleLogin = () => void identify();
-        const handleLogout = () => callWidget('reset');
+        const handleLogout = () => callMonkfeed('shutdown');
         window.addEventListener('monkfeed:login', handleLogin);
         window.addEventListener('monkfeed:logout', handleLogout);
         return () => {

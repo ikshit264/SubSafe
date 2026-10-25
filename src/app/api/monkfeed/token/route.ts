@@ -35,7 +35,7 @@ export async function GET() {
 
     const user = await prisma.user.findUnique({
         where: { id: payload.userId },
-        select: { id: true, name: true, email: true, plan: true },
+        select: { id: true, name: true, email: true, plan: true, createdAt: true },
     });
     if (!user?.email) {
         return NextResponse.json({ error: 'User not found' }, { status: 404, headers: { 'Cache-Control': 'no-store' } });
@@ -46,6 +46,8 @@ export async function GET() {
         externalUserId: user.id,
         email: user.email,
         ...(user.name ? { name: user.name } : {}),
+        // Optional sign-up date (Monkfeed shows it on the visitor profile).
+        createdAt: user.createdAt.toISOString(),
         // Customer attributes (plan, ...): shown in the Monkfeed dashboard once
         // attribute support is deployed; ignored by older Monkfeed versions.
         attributes: { plan: user.plan || 'free' },
@@ -55,5 +57,13 @@ export async function GET() {
     const encoded = base64url(JSON.stringify(claims));
     const signature = createHmac('sha256', Buffer.from(secretHex, 'hex')).update(encoded).digest('base64url');
 
-    return NextResponse.json({ token: `${encoded}.${signature}` }, { headers: { 'Cache-Control': 'no-store' } });
+    // `user` mirrors the signed claims so the page can call Monkfeed('boot', { user_id, email, name, created_at, user_jwt });
+    // only the signed token makes the identity verified, the plain fields are for the widget's display.
+    return NextResponse.json(
+        {
+            token: `${encoded}.${signature}`,
+            user: { id: user.id, email: user.email, ...(user.name ? { name: user.name } : {}), createdAt: user.createdAt.toISOString() },
+        },
+        { headers: { 'Cache-Control': 'no-store' } }
+    );
 }
